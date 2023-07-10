@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
-* Студент: [Valerie Kravtsova](https://up.htmlacademy.ru/react/13/user/1869163).
-* Наставник: `Неизвестно`.
+- Студент: [Valerie Kravtsova](https://up.htmlacademy.ru/react/13/user/1869163).
+- Наставник: [Елена Грицук](https://htmlacademy.ru/profile/id199079).
 
 ---
 
