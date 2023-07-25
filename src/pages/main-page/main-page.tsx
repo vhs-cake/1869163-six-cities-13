@@ -1,17 +1,14 @@
-import Card from '../../components/card/card';
 import Logo from '../../components/logo/logo';
-import { mocks } from '../../const';
 import { Helmet } from 'react-helmet-async';
+import { CardType } from '../../types/offer';
+import CardList from '../../components/card-list/card-list';
 
 type MainPageProps = {
   cardsCount: number;
+  cardsData: CardType[];
 };
 
-function MainPage({ cardsCount }: MainPageProps): JSX.Element {
-  const cardsToRender = mocks.slice(0, cardsCount);
-
-  const cards = cardsToRender.map((card) => <Card key={card.id} />);
-
+function MainPage({ cardsCount, cardsData }: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -89,7 +86,9 @@ function MainPage({ cardsCount }: MainPageProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">
+                {cardsCount} places to stay in Amsterdam
+              </b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -117,7 +116,7 @@ function MainPage({ cardsCount }: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {cards}
+                <CardList cardsCount={cardsCount} cardsData={cardsData} />
               </div>
             </section>
             <div className="cities__right-section">
