@@ -2,13 +2,16 @@ import Logo from '../../components/logo/logo';
 import { Helmet } from 'react-helmet-async';
 import { CardType } from '../../types/offer';
 import CardList from '../../components/card-list/card-list';
+import Map from '../../components/map/map';
+import { CityType } from '../../types/city';
 
 type MainPageProps = {
   cardsCount: number;
   cardsData: CardType[];
+  city: CityType;
 };
 
-function MainPage({ cardsCount, cardsData }: MainPageProps): JSX.Element {
+function MainPage({ cardsCount, cardsData, city }: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -120,7 +123,9 @@ function MainPage({ cardsCount, cardsData }: MainPageProps): JSX.Element {
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map" />
+              <section className="cities__map map">
+                <Map city={city} cards={cardsData} />
+              </section>
             </div>
           </div>
         </div>
