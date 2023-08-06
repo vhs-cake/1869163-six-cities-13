@@ -1,17 +1,33 @@
 import Logo from '../../components/logo/logo';
 import { Helmet } from 'react-helmet-async';
-import { CardType } from '../../types/offer';
 import CardList from '../../components/card-list/card-list';
 import Map from '../../components/map/map';
-import { CityType } from '../../types/city';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import {
+  filterByCityAction,
+  resetSortAction,
+  sortByRatingAction,
+  sortPriceHighToLowAction,
+  sortPriceLowToHighAction,
+} from '../../store/action';
+import Tabs from '../../components/tabs/tabs';
+import { useEffect } from 'react';
 
 type MainPageProps = {
   cardsCount: number;
-  cardsData: CardType[];
-  city: CityType;
 };
 
-function MainPage({ cardsCount, cardsData, city }: MainPageProps): JSX.Element {
+function MainPage({ cardsCount }: MainPageProps): JSX.Element {
+  const { cards, initialCards } = useAppSelector((state) => state);
+  const city = useAppSelector((state) => state.city);
+  const cities = [...new Set(initialCards.map((card) => card.city.name))];
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(filterByCityAction('Paris'));
+  }, []);
+
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -49,42 +65,7 @@ function MainPage({ cardsCount, cardsData, city }: MainPageProps): JSX.Element {
       </header>
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
-          </section>
-        </div>
+        <Tabs cities={cities} />
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
@@ -104,27 +85,40 @@ function MainPage({ cardsCount, cardsData, city }: MainPageProps): JSX.Element {
                   <li
                     className="places__option places__option--active"
                     tabIndex={0}
+                    onClick={() => dispatch(resetSortAction())}
                   >
                     Popular
                   </li>
-                  <li className="places__option" tabIndex={0}>
+                  <li
+                    className="places__option"
+                    tabIndex={0}
+                    onClick={() => dispatch(sortPriceLowToHighAction())}
+                  >
                     Price: low to high
                   </li>
-                  <li className="places__option" tabIndex={0}>
+                  <li
+                    className="places__option"
+                    tabIndex={0}
+                    onClick={() => dispatch(sortPriceHighToLowAction())}
+                  >
                     Price: high to low
                   </li>
-                  <li className="places__option" tabIndex={0}>
+                  <li
+                    className="places__option"
+                    tabIndex={0}
+                    onClick={() => dispatch(sortByRatingAction())}
+                  >
                     Top rated first
                   </li>
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <CardList cardsCount={cardsCount} cardsData={cardsData} />
+                <CardList cardsCount={cardsCount} cardsData={cards} />
               </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={city} cards={cardsData} />
+                <Map city={city} cards={cards} />
               </section>
             </div>
           </div>
