@@ -8,8 +8,8 @@ export const cardsData: CardType[] = [
     price: 203,
     previewImage: 'https://13.design.pages.academy/static/hotel/12.jpg',
     city: {
-      name: 'Paris',
-      location: { latitude: 48.85661, longitude: 2.351499, zoom: 13 },
+      name: 'Cologne',
+      location: { latitude: 50.938361, longitude: 6.959974, zoom: 13 },
     },
     location: { latitude: 48.868610000000004, longitude: 2.342499, zoom: 16 },
     isFavorite: true,
@@ -53,8 +53,8 @@ export const cardsData: CardType[] = [
     price: 447,
     previewImage: 'https://13.design.pages.academy/static/hotel/14.jpg',
     city: {
-      name: 'Paris',
-      location: { latitude: 48.85661, longitude: 2.351499, zoom: 13 },
+      name: 'Brussels',
+      location: { latitude: 50.846557, longitude: 4.351697, zoom: 13 },
     },
     location: { latitude: 48.85761, longitude: 2.358499, zoom: 16 },
     isFavorite: true,

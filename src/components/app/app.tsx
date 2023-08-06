@@ -9,7 +9,6 @@ import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import { Setting } from '../../const';
 import { cardsData } from '../../mocks/offers';
-import { city } from '../../mocks/city';
 
 const cardsCount = Setting.CardsCount;
 
@@ -20,13 +19,7 @@ function App(): JSX.Element {
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={
-              <MainPage
-                cardsCount={cardsCount}
-                cardsData={cardsData}
-                city={city}
-              />
-            }
+            element={<MainPage cardsCount={cardsCount} />}
           />
           <Route path={AppRoute.Login} element={<LoginPage />} />
           <Route
@@ -37,10 +30,7 @@ function App(): JSX.Element {
               </PrivateRoute>
             }
           />
-          <Route
-            path={AppRoute.Offer}
-            element={<OfferPage cardsData={cardsData} />}
-          />
+          <Route path={AppRoute.Offer} element={<OfferPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
