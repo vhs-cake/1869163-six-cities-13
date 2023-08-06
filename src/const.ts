@@ -1,5 +1,4 @@
 export const Setting = {
-  CardsCount: 4,
   ReviewCharactersMax: 50,
 };
 

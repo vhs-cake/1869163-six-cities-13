@@ -13,11 +13,7 @@ import {
 import Tabs from '../../components/tabs/tabs';
 import { useEffect } from 'react';
 
-type MainPageProps = {
-  cardsCount: number;
-};
-
-function MainPage({ cardsCount }: MainPageProps): JSX.Element {
+function MainPage(): JSX.Element {
   const { cards, initialCards } = useAppSelector((state) => state);
   const city = useAppSelector((state) => state.city);
   const cities = [...new Set(initialCards.map((card) => card.city.name))];
@@ -71,7 +67,7 @@ function MainPage({ cardsCount }: MainPageProps): JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {cardsCount} places to stay in Amsterdam
+                {cards.length} places to stay in {city.name}
               </b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
@@ -113,7 +109,7 @@ function MainPage({ cardsCount }: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <CardList cardsCount={cardsCount} cardsData={cards} />
+                <CardList cardsData={cards} />
               </div>
             </section>
             <div className="cities__right-section">

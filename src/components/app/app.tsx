@@ -7,26 +7,20 @@ import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
-import { Setting } from '../../const';
 import { cardsData } from '../../mocks/offers';
-
-const cardsCount = Setting.CardsCount;
 
 function App(): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
-          <Route
-            path={AppRoute.Root}
-            element={<MainPage cardsCount={cardsCount} />}
-          />
+          <Route path={AppRoute.Root} element={<MainPage />} />
           <Route path={AppRoute.Login} element={<LoginPage />} />
           <Route
             path={AppRoute.Favorites}
             element={
               <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-                <FavoritesPage cardsCount={cardsCount} cardsData={cardsData} />
+                <FavoritesPage cardsData={cardsData} />
               </PrivateRoute>
             }
           />
