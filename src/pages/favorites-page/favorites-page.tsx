@@ -4,14 +4,10 @@ import { CardType } from '../../types/offer';
 import FavoritesCardList from '../../components/favorites-card-list/favorites-card-list';
 
 type FavoritesPageProps = {
-  cardsCount: number;
   cardsData: CardType[];
 };
 
-function FavoritesPage({
-  cardsCount,
-  cardsData,
-}: FavoritesPageProps): JSX.Element {
+function FavoritesPage({ cardsData }: FavoritesPageProps): JSX.Element {
   return (
     <div className="page">
       <Helmet>
@@ -61,10 +57,7 @@ function FavoritesPage({
                   </div>
                 </div>
                 <div className="favorites__places">
-                  <FavoritesCardList
-                    cardsCount={cardsCount}
-                    cardsData={cardsData}
-                  />
+                  <FavoritesCardList cardsData={cardsData} />
                 </div>
               </li>
             </ul>
