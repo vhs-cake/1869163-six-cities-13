@@ -1,6 +1,9 @@
 export const Setting = {
+  ReviewCountMax: 10,
   ReviewCharactersMax: 50,
 };
+
+export const TIMEOUT_SHOW_ERROR = 2000;
 
 export enum AppRoute {
   Root = '/',
@@ -13,6 +16,12 @@ export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
+}
+
+export enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
 }
 
 export const URL_MARKER_DEFAULT =

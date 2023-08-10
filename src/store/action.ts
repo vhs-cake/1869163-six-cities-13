@@ -1,4 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
+import { CardType } from '../types/offer';
+import { AppRoute, AuthorizationStatus } from '../const';
 
 export const Action = {
   FILTER_BY_CITY: 'FILTER_BY_CITY',
@@ -26,3 +28,17 @@ export const sortPriceHighToLowAction = createAction(
 export const sortByRatingAction = createAction(Action.SORT_BY_RATING);
 
 export const resetSortAction = createAction(Action.RESET_SORT);
+
+export const loadOffers = createAction<CardType[]>('data/loadOffers');
+
+export const requireAuthorization = createAction<AuthorizationStatus>(
+  'user/requireAuthorization'
+);
+
+export const setError = createAction<string | null>('cities/setError');
+
+export const setOffersDataLoadingStatus = createAction<boolean>(
+  'data/setOffersDataLoadingStatus'
+);
+
+export const redirectToRoute = createAction<AppRoute>('cities/redirectToRoute');

@@ -1,13 +1,8 @@
 import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo';
-import { CardType } from '../../types/offer';
 import FavoritesCardList from '../../components/favorites-card-list/favorites-card-list';
 
-type FavoritesPageProps = {
-  cardsData: CardType[];
-};
-
-function FavoritesPage({ cardsData }: FavoritesPageProps): JSX.Element {
+function FavoritesPage(): JSX.Element {
   return (
     <div className="page">
       <Helmet>
@@ -57,7 +52,7 @@ function FavoritesPage({ cardsData }: FavoritesPageProps): JSX.Element {
                   </div>
                 </div>
                 <div className="favorites__places">
-                  <FavoritesCardList cardsData={cardsData} />
+                  <FavoritesCardList />
                 </div>
               </li>
             </ul>
