@@ -1,12 +1,10 @@
-import { CardType } from '../../types/offer';
+import { useAppSelector } from '../../hooks';
 import FavoritesCard from '../favorites-card/favorites-card';
 
-type FavoritesCardListProps = {
-  cardsData: CardType[];
-};
+function FavoritesCardList(): JSX.Element {
+  const { initialCards } = useAppSelector((state) => state);
 
-function FavoritesCardList({ cardsData }: FavoritesCardListProps): JSX.Element {
-  const favoriteCards = cardsData.filter((card) => card.isFavorite);
+  const favoriteCards = initialCards.filter((card) => card.isFavorite);
 
   return (
     <div className="favorites__places">
