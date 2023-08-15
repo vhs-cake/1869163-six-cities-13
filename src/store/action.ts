@@ -1,6 +1,7 @@
 import { createAction } from '@reduxjs/toolkit';
 import { CardType } from '../types/offer';
 import { AppRoute, AuthorizationStatus } from '../const';
+import { CommentType } from '../types/comment';
 
 export const Action = {
   FILTER_BY_CITY: 'FILTER_BY_CITY',
@@ -30,10 +31,15 @@ export const sortByRatingAction = createAction(Action.SORT_BY_RATING);
 export const resetSortAction = createAction(Action.RESET_SORT);
 
 export const loadOffers = createAction<CardType[]>('data/loadOffers');
+export const loadComments = createAction<CommentType[]>('data/loadComments');
 
 export const requireAuthorization = createAction<AuthorizationStatus>(
   'user/requireAuthorization'
 );
+
+export const postComment = createAction<CommentType>('data/postComment');
+
+export const setEmail = createAction<string | null>('data/getEmail');
 
 export const setError = createAction<string | null>('cities/setError');
 

@@ -1,6 +1,7 @@
 export const Setting = {
   ReviewCountMax: 10,
-  ReviewCharactersMax: 50,
+  ReviewCharactersMin: 50,
+  ReviewCharactersMax: 300,
 };
 
 export const TIMEOUT_SHOW_ERROR = 2000;
@@ -22,6 +23,7 @@ export enum APIRoute {
   Offers = '/offers',
   Login = '/login',
   Logout = '/logout',
+  Comments = '/comments',
 }
 
 export const URL_MARKER_DEFAULT =

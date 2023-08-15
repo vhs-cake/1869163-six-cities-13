@@ -2,9 +2,12 @@ import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state.js';
 import {
+  loadComments,
   loadOffers,
+  postComment,
   redirectToRoute,
   requireAuthorization,
+  setEmail,
   setError,
   setOffersDataLoadingStatus,
 } from './action';
@@ -19,6 +22,7 @@ import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { CardType } from '../types/offer.js';
 import { store } from './index';
+import { CommentType } from '../types/comment.js';
 
 export const clearErrorAction = createAsyncThunk('data/clearError', () => {
   setTimeout(() => store.dispatch(setError(null)), TIMEOUT_SHOW_ERROR);
@@ -39,6 +43,21 @@ export const fetchOffersAction = createAsyncThunk<
   dispatch(loadOffers(data));
 });
 
+export const fetchCommentsAction = createAsyncThunk<
+  void,
+  { offerId: string },
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('data/fetchComments', async ({ offerId }, { dispatch, extra: api }) => {
+  const { data } = await api.get<CommentType[]>(
+    `${APIRoute.Comments}/${offerId}`
+  );
+  dispatch(loadComments(data));
+});
+
 export const checkAuthAction = createAsyncThunk<
   void,
   undefined,
@@ -56,6 +75,25 @@ export const checkAuthAction = createAsyncThunk<
   }
 });
 
+export const postCommentAction = createAsyncThunk<
+  void,
+  { offerId: string; comment: string; rating: number },
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>(
+  'data/postComment',
+  async ({ offerId, comment, rating }, { dispatch, extra: api }) => {
+    const { data } = await api.post<CommentType>(
+      `${APIRoute.Comments}/${offerId}`,
+      { comment, rating }
+    );
+    dispatch(postComment(data));
+  }
+);
+
 export const loginAction = createAsyncThunk<
   void,
   AuthData,
@@ -71,8 +109,9 @@ export const loginAction = createAsyncThunk<
       data: { token },
     } = await api.post<UserData>(APIRoute.Login, { email, password });
     saveToken(token);
+    dispatch(setEmail(email));
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    dispatch(redirectToRoute(AppRoute.Favorites));
+    dispatch(redirectToRoute(AppRoute.Root));
   }
 );
 

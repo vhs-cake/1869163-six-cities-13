@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import MainPage from '../../pages/main-page/main-page';
 import LoginPage from '../../pages/login-page/login-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
@@ -11,19 +11,17 @@ import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
+import LoginRoute from '../private-route/login-route';
+import { useAuthorizationStatus } from '../../hooks/use-authorization-status';
 
 function App(): JSX.Element {
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
+  const { isUnknown } = useAuthorizationStatus();
+
   const isOffersDataLoading = useAppSelector(
     (state) => state.isOffersDataLoading
   );
 
-  if (
-    authorizationStatus === AuthorizationStatus.Unknown ||
-    isOffersDataLoading
-  ) {
+  if (isUnknown || isOffersDataLoading) {
     return <LoadingScreen />;
   }
 
@@ -32,11 +30,18 @@ function App(): JSX.Element {
       <HistoryRouter history={browserHistory}>
         <Routes>
           <Route path={AppRoute.Root} element={<MainPage />} />
-          <Route path={AppRoute.Login} element={<LoginPage />} />
+          <Route
+            path={AppRoute.Login}
+            element={
+              <LoginRoute>
+                <LoginPage />
+              </LoginRoute>
+            }
+          />
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authorizationStatus={authorizationStatus}>
+              <PrivateRoute>
                 <FavoritesPage />
               </PrivateRoute>
             }

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import leaflet from 'leaflet';
+import leaflet, { layerGroup } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/use-map';
 import { CardType } from '../../types/offer';
@@ -16,13 +16,19 @@ function Map({ cards, city }: MapProps): JSX.Element {
 
   useEffect(() => {
     if (map) {
+      map.setView(
+        [city.location.latitude, city.location.longitude],
+        city.location.zoom
+      );
+      const markerLayer = layerGroup().addTo(map);
+
       cards.forEach((card) => {
         leaflet
           .marker({
             lat: card.city.location.latitude,
             lng: card.city.location.longitude,
           })
-          .addTo(map);
+          .addTo(markerLayer);
       });
     }
   }, [map, city, cards]);

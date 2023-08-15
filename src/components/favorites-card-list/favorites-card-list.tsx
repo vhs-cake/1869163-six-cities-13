@@ -2,7 +2,7 @@ import { useAppSelector } from '../../hooks';
 import FavoritesCard from '../favorites-card/favorites-card';
 
 function FavoritesCardList(): JSX.Element {
-  const { initialCards } = useAppSelector((state) => state);
+  const initialCards = useAppSelector((state) => state.initialCards);
 
   const favoriteCards = initialCards.filter((card) => card.isFavorite);
 
