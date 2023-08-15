@@ -5,11 +5,15 @@ import ReviewForm from '../../components/review-form/review-form';
 import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
 import { useAppSelector } from '../../hooks';
+import { useAuthorizationStatus } from '../../hooks/use-authorization-status';
+import Navigation from '../../components/nav-item/nav-item';
 
 function OfferPage(): JSX.Element {
-  const { id } = useParams();
+  const id = useParams().id || '';
   const cardsData = useAppSelector((state) => state.initialCards);
   const chosenOffer = cardsData.find((card) => card.id === id);
+  const { isAuth } = useAuthorizationStatus();
+  const initialComments = useAppSelector((state) => state.initialComments);
 
   return (
     <div className="page">
@@ -22,27 +26,7 @@ function OfferPage(): JSX.Element {
             <div className="header__left">
               <Logo />
             </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a
-                    className="header__nav-link header__nav-link--profile"
-                    href="#"
-                  >
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
-                    </span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
+            <Navigation />
           </div>
         </div>
       </header>
@@ -179,10 +163,13 @@ function OfferPage(): JSX.Element {
               </div>
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">
-                  Reviews · <span className="reviews__amount">1</span>
+                  Reviews ·{' '}
+                  <span className="reviews__amount">
+                    {initialComments.length}
+                  </span>
                 </h2>
-                <ReviewList />
-                <ReviewForm></ReviewForm>
+                <ReviewList offerId={id} />
+                {isAuth && <ReviewForm offerId={id}></ReviewForm>}
               </section>
             </div>
           </div>

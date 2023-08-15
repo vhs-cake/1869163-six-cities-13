@@ -12,16 +12,15 @@ import {
 } from '../../store/action';
 import Tabs from '../../components/tabs/tabs';
 import { useEffect } from 'react';
-import { AppRoute } from '../../const';
-import { useNavigate } from 'react-router-dom';
+import NavItem from '../../components/nav-item/nav-item';
 
 function MainPage(): JSX.Element {
-  const { cards, initialCards } = useAppSelector((state) => state);
+  const cards = useAppSelector((state) => state.cards);
+  const initialCards = useAppSelector((state) => state.initialCards);
   const city = useAppSelector((state) => state.city);
   const cities = [...new Set(initialCards.map((card) => card.city.name))];
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(filterByCityAction('Paris'));
@@ -40,20 +39,7 @@ function MainPage(): JSX.Element {
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a
-                    className="header__nav-link header__nav-link--profile"
-                    href="#"
-                  >
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span
-                      onClick={() => navigate(AppRoute.Login)}
-                      className="header__login"
-                    >
-                      Sign in
-                    </span>
-                  </a>
-                </li>
+                <NavItem />
               </ul>
             </nav>
           </div>

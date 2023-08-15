@@ -8,8 +8,8 @@ type UseMapProps = {
 };
 
 function useMap({ mapRef, city }: UseMapProps) {
-  const [map, setMap] = useState(null);
-  const isRenderedRef = useRef(false);
+  const [map, setMap] = useState<leaflet.Map | null>(null);
+  const isRenderedRef = useRef<boolean>(false);
 
   useEffect(() => {
     if (mapRef.current !== null && !isRenderedRef.current) {

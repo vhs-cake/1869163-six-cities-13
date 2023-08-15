@@ -1,28 +1,42 @@
 import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo';
-import { FormEvent, useRef } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
-import { useNavigate } from 'react-router-dom';
 import { loginAction } from '../../store/api-actions';
-import { AppRoute } from '../../const';
+import { processErrorHandle } from '../../services/process-error-handle';
 
 function LoginPage(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+  const [passwordError, setPasswordError] = useState('');
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
-      dispatch(
-        loginAction({
-          login: loginRef.current.value,
-          password: passwordRef.current.value,
-        })
-      );
+    if (passwordRef.current) {
+      const password = passwordRef.current.value;
+      const hasLetter = /[a-zA-Z]/.test(password);
+      const hasNumber = /[0-9]/.test(password);
+
+      if (loginRef.current !== null) {
+        if (!hasLetter || !hasNumber) {
+          setPasswordError(
+            'Password must contain at least 1 letter and 1 number'
+          );
+          processErrorHandle(passwordError);
+          return;
+        }
+
+        setPasswordError('');
+        dispatch(
+          loginAction({
+            login: loginRef.current.value,
+            password: passwordRef.current.value,
+          })
+        );
+      }
     }
   };
 
@@ -73,7 +87,6 @@ function LoginPage(): JSX.Element {
                 />
               </div>
               <button
-                onClick={() => navigate(AppRoute.Favorites)}
                 className="login__submit form__submit button"
                 type="submit"
               >

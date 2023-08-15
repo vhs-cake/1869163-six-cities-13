@@ -1,9 +1,11 @@
 import { createReducer, current } from '@reduxjs/toolkit';
 import {
   filterByCityAction,
+  loadComments,
   loadOffers,
   requireAuthorization,
   resetSortAction,
+  setEmail,
   setError,
   setOffersDataLoadingStatus,
   sortByRatingAction,
@@ -14,12 +16,15 @@ import { city } from '../mocks/city';
 import { AuthorizationStatus } from '../const';
 import { CardType } from '../types/offer';
 import { CityType } from '../types/city';
+import { CommentType } from '../types/comment';
 
 type InitialState = {
   initialCards: CardType[];
   cards: CardType[];
+  initialComments: CommentType[];
   city: CityType;
   authorizationStatus: AuthorizationStatus;
+  email: string | null;
   isOffersDataLoading: boolean;
   error: string | null;
 };
@@ -27,8 +32,10 @@ type InitialState = {
 const initialState: InitialState = {
   initialCards: [],
   cards: [],
+  initialComments: [],
   city: city,
   authorizationStatus: AuthorizationStatus.Unknown,
+  email: null,
   isOffersDataLoading: false,
   error: null,
 };
@@ -56,6 +63,9 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadOffers, (state, action) => {
       state.initialCards = action.payload;
     })
+    .addCase(loadComments, (state, action) => {
+      state.initialComments = action.payload;
+    })
     .addCase(setOffersDataLoadingStatus, (state, action) => {
       state.isOffersDataLoading = action.payload;
     })
@@ -64,6 +74,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;
+    })
+    .addCase(setEmail, (state, action) => {
+      state.email = action.payload;
     });
 });
 
