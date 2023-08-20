@@ -39,14 +39,12 @@ function Navigation(): JSX.Element {
 
           {isAuth && (
             <Link
-              to="/login"
+              to="/favorites"
               className="header__nav-link header__nav-link--profile"
             >
               <div className="header__avatar-wrapper user__avatar-wrapper"></div>
               <span className="header__user-name user__name">{email}</span>
-              <Link to="/favorites" className="header__favorite-count">
-                3
-              </Link>
+              <span className="header__favorite-count">3</span>
             </Link>
           )}
         </li>

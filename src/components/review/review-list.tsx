@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCommentsAction } from '../../store/api-actions';
-import ReviewItem from '../review-item/review-item';
+import ReviewItem from './review-item';
 import { Setting } from '../../const';
 
 type ReviewListProps = {

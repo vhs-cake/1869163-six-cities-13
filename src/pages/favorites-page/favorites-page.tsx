@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo';
-import FavoritesCardList from '../../components/favorites-card-list/favorites-card-list';
+import FavoritesCardList from '../../components/favorites-card/favorites-card-list';
 import NavItem from '../../components/nav-item/nav-item';
 
 function FavoritesPage(): JSX.Element {
