@@ -3,23 +3,30 @@ import { Helmet } from 'react-helmet-async';
 import CardList from '../../components/card/card-list';
 import Map from '../../components/map/map';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import {
-  filterByCityAction,
-  sortByRatingAction,
-  sortPriceHighToLowAction,
-  sortPriceLowToHighAction,
-} from '../../store/action';
 import Tabs from '../../components/tabs/tabs';
 import { useEffect, useState } from 'react';
 import NavItem from '../../components/nav-item/nav-item';
 import classNames from 'classnames';
+import {
+  filterByCity,
+  sortByRating,
+  sortPriceHighToLow,
+  sortPriceLowToHigh,
+} from '../../store/cities-data/cities-data';
+import { NameSpace } from '../../const';
 
 function MainPage(): JSX.Element {
-  const cards = useAppSelector((state) => state.cards);
-  const chosenOffer = useAppSelector((state) => state.chosenOffer);
-  const activeCard = useAppSelector((state) => state.activeCard);
-  const initialCards = useAppSelector((state) => state.initialCards);
-  const city = useAppSelector((state) => state.city);
+  const cards = useAppSelector((state) => state[NameSpace.Data].cards);
+  const chosenOffer = useAppSelector(
+    (state) => state[NameSpace.Data].chosenOffer
+  );
+  const activeCard = useAppSelector(
+    (state) => state[NameSpace.Cities].activeCard
+  );
+  const initialCards = useAppSelector(
+    (state) => state[NameSpace.Data].initialCards
+  );
+  const city = useAppSelector((state) => state[NameSpace.Data].city);
   const cities = [...new Set(initialCards.map((card) => card.city.name))];
 
   const [SortOpeningState, setSortOpeningState] = useState(false);
@@ -28,8 +35,8 @@ function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(filterByCityAction('Paris'));
-  }, []);
+    dispatch(filterByCity('Paris'));
+  }, [dispatch]);
 
   function handleSortOpening() {
     setSortOpeningState(!SortOpeningState);
@@ -87,7 +94,7 @@ function MainPage(): JSX.Element {
                     className="places__option places__option--active"
                     tabIndex={0}
                     onClick={() => {
-                      dispatch(filterByCityAction(city.name));
+                      dispatch(filterByCity(city.name));
                       setActiveSort('Popular');
                     }}
                   >
@@ -97,7 +104,7 @@ function MainPage(): JSX.Element {
                     className="places__option"
                     tabIndex={0}
                     onClick={() => {
-                      dispatch(sortPriceLowToHighAction());
+                      dispatch(sortPriceLowToHigh());
                       setActiveSort('Price: low to high');
                     }}
                   >
@@ -107,7 +114,7 @@ function MainPage(): JSX.Element {
                     className="places__option"
                     tabIndex={0}
                     onClick={() => {
-                      dispatch(sortPriceHighToLowAction());
+                      dispatch(sortPriceHighToLow());
                       setActiveSort('Price: high to low');
                     }}
                   >
@@ -117,7 +124,7 @@ function MainPage(): JSX.Element {
                     className="places__option"
                     tabIndex={0}
                     onClick={() => {
-                      dispatch(sortByRatingAction());
+                      dispatch(sortByRating());
                       setActiveSort('Top rated first');
                     }}
                   >

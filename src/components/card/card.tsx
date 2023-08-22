@@ -2,9 +2,10 @@ import { Link } from 'react-router-dom';
 import { CardType } from '../../types/offer';
 import { useAuthorizationStatus } from '../../hooks/use-authorization-status';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setActiveCard } from '../../store/action';
-import { changeFavoriteStatusAction } from '../../store/api-actions';
 import classNames from 'classnames';
+import { NameSpace } from '../../const';
+import { setActiveCard } from '../../store/cities-process/cities-process';
+import { handleAddToFavorites } from '../favorites-card/utils';
 
 type CardProps = {
   card: CardType;
@@ -12,22 +13,14 @@ type CardProps = {
 
 function Card({ card }: CardProps): JSX.Element {
   const { isAuth, isUnknown, isNoAuth } = useAuthorizationStatus();
-  const activeCard = useAppSelector((state) => state.activeCard);
+  const activeCard = useAppSelector(
+    (state) => state[NameSpace.Cities].activeCard
+  );
 
   const dispatch = useAppDispatch();
 
   function handleMouseOver() {
     dispatch(setActiveCard(card));
-  }
-
-  function handleAddToFavorites() {
-    const newStatus = card.isFavorite ? 0 : 1;
-    dispatch(
-      changeFavoriteStatusAction({
-        offerId: card.id,
-        status: newStatus,
-      })
-    );
   }
 
   return (
@@ -69,7 +62,7 @@ function Card({ card }: CardProps): JSX.Element {
           </div>
           {isAuth && (
             <button
-              onClick={handleAddToFavorites}
+              onClick={() => handleAddToFavorites(card, dispatch)}
               className={classNames('place-card__bookmark-button button', {
                 'place-card__bookmark-button--active': card.isFavorite,
               })}

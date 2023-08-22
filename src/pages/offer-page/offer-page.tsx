@@ -16,22 +16,28 @@ import OfferGallery from '../../components/offer-gallery/offer-gallery';
 import OfferGoodsList from '../../components/offer-goods/offer-goods-list';
 import OfferNearPlacesList from '../../components/offer-near-places/offer-near-places-list';
 import classNames from 'classnames';
-import { Setting } from '../../const';
+import { NameSpace, Setting } from '../../const';
 
 function OfferPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const { isAuth, isUnknown, isNoAuth } = useAuthorizationStatus();
   const id = useParams().id || '';
 
-  const initialComments = useAppSelector((state) => state.initialComments);
+  const initialComments = useAppSelector(
+    (state) => state[NameSpace.Data].initialComments
+  );
 
   useEffect(() => {
     dispatch(fetchChosenOfferAction({ offerId: id }));
     dispatch(fetchOffersNearbyAction({ offerId: id }));
   }, [dispatch, id]);
 
-  const chosenOffer = useAppSelector((state) => state.chosenOffer);
-  const offersNearby = useAppSelector((state) => state.offersNearby);
+  const chosenOffer = useAppSelector(
+    (state) => state[NameSpace.Data].chosenOffer
+  );
+  const offersNearby = useAppSelector(
+    (state) => state[NameSpace.Data].offersNearby
+  );
 
   const randomMapPoints = [...offersNearby]
     .sort(() => Math.random() - 0.5)

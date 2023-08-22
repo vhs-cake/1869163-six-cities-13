@@ -25,7 +25,7 @@ function LoginPage(): JSX.Element {
           setPasswordError(
             'Password must contain at least 1 letter and 1 number'
           );
-          processErrorHandle(passwordError);
+          processErrorHandle(passwordError, dispatch);
           return;
         }
 

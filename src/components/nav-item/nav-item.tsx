@@ -2,12 +2,13 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
 import { useAuthorizationStatus } from '../../hooks/use-authorization-status';
+import { NameSpace } from '../../const';
 
 function Navigation(): JSX.Element {
   const { isAuth, isUnknown, isNoAuth } = useAuthorizationStatus();
 
   const dispatch = useAppDispatch();
-  const email = useAppSelector((state) => state.email);
+  const email = useAppSelector((state) => state[NameSpace.User].email);
 
   const handleLogout = () => {
     dispatch(logoutAction());

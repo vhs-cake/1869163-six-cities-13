@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import FavoritesCard from './favorites-card';
 import { fetchFavoritesAction } from '../../store/api-actions';
+import { NameSpace } from '../../const';
 
 function FavoritesCardList(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -10,7 +11,9 @@ function FavoritesCardList(): JSX.Element {
     dispatch(fetchFavoritesAction());
   }, [dispatch]);
 
-  const favoriteCards = useAppSelector((state) => state.favoriteCards);
+  const favoriteCards = useAppSelector(
+    (state) => state[NameSpace.Data].favoriteCards
+  );
 
   return (
     <div className="favorites__places">
