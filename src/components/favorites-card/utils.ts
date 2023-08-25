@@ -1,10 +1,11 @@
+import { store } from '../../store';
 import { changeFavoriteStatusAction } from '../../store/api-actions';
+import { ChosenOfferType } from '../../types/chosen-offer';
 import { CardType } from '../../types/offer';
-import { AppDispatch } from '../../types/state';
 
-export function handleAddToFavorites(card: CardType, dispatch: AppDispatch) {
+export function handleAddToFavorites(card: CardType | ChosenOfferType) {
   const newStatus = card.isFavorite ? 0 : 1;
-  dispatch(
+  store.dispatch(
     changeFavoriteStatusAction({
       offerId: card.id,
       status: newStatus,

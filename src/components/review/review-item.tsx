@@ -1,10 +1,21 @@
+import StarRating from '../star-rating/star-rating';
+import { getFormattedDate } from './utils';
+
 type ReviewItemProps = {
   name: string;
   avatarUrl: string;
   commentText: string;
+  rating: number;
+  commentDate: string;
 };
 
-function ReviewItem({ name, avatarUrl, commentText }: ReviewItemProps) {
+function ReviewItem({
+  name,
+  avatarUrl,
+  commentText,
+  rating,
+  commentDate,
+}: ReviewItemProps) {
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
@@ -22,13 +33,12 @@ function ReviewItem({ name, avatarUrl, commentText }: ReviewItemProps) {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{ width: '80%' }} />
-            <span className="visually-hidden">Rating</span>
+            <StarRating rating={rating} />
           </div>
         </div>
         <p className="reviews__text">{commentText}</p>
         <time className="reviews__time" dateTime="2019-04-24">
-          April 2019
+          {getFormattedDate(commentDate)}
         </time>
       </div>
     </li>

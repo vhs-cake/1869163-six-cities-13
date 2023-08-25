@@ -11,13 +11,13 @@ function FavoritesCardList(): JSX.Element {
     dispatch(fetchFavoritesAction());
   }, [dispatch]);
 
-  const favoriteCards = useAppSelector(
-    (state) => state[NameSpace.Data].favoriteCards
+  const filteredFavoriteCards = useAppSelector(
+    (state) => state[NameSpace.Data].filteredFavoriteCards
   );
 
   return (
     <div className="favorites__places">
-      {favoriteCards.map((card) => (
+      {filteredFavoriteCards.map((card) => (
         <FavoritesCard key={card.id} card={card} />
       ))}
     </div>

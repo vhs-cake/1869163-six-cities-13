@@ -3,7 +3,6 @@ import { AuthorizationStatus } from '../const';
 import { CardType } from './offer.ts';
 import { CommentType } from './comment.ts';
 import { ChosenOfferType } from './chosen-offer.ts';
-import { OfferNearby } from './offer-nearby.ts';
 import { CityType } from './city.ts';
 
 export type UserProcess = {
@@ -14,6 +13,9 @@ export type UserProcess = {
 export type CitiesProcess = {
   error: string | null;
   activeCard: CardType | null;
+  isSubmitting: boolean;
+  currentComment: string;
+  currentRating: number;
 };
 
 export type CitiesData = {
@@ -21,9 +23,10 @@ export type CitiesData = {
   cards: CardType[];
   initialComments: CommentType[];
   favoriteCards: CardType[];
+  filteredFavoriteCards: CardType[];
   isOffersDataLoading: boolean;
   chosenOffer: ChosenOfferType | null;
-  offersNearby: OfferNearby[];
+  offersNearby: CardType[];
   city: CityType;
   hasError: boolean;
 };

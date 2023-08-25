@@ -4,7 +4,7 @@ export const Setting = {
   ReviewCountMax: 10,
   ReviewCharactersMin: 50,
   ReviewCharactersMax: 300,
-  OfferMapPointsCount: 2,
+  OfferMapPointsCount: 3,
 };
 
 export const TIMEOUT_SHOW_ERROR = 2000;

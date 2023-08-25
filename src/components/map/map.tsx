@@ -69,13 +69,15 @@ function Map({ cards, city, activeCard, chosenOffer }: MapProps): JSX.Element {
       );
     }
   }, [
-    map,
-    city,
-    cards,
-    defaultCustomIcon,
-    currentCustomIcon,
     activeCard?.id,
+    cards,
     chosenOffer,
+    city.location.latitude,
+    city.location.longitude,
+    city.location.zoom,
+    currentCustomIcon,
+    defaultCustomIcon,
+    map,
   ]);
 
   return <div style={{ height: '100%', width: '100%' }} ref={mapRef} />;

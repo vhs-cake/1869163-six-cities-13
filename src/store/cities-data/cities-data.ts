@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { NameSpace, city } from '../../const';
 import { CitiesData } from '../../types/state';
 import {
+  changeFavoriteStatusAction,
   fetchChosenOfferAction,
   fetchCommentsAction,
   fetchFavoritesAction,
@@ -15,6 +16,7 @@ const initialState: CitiesData = {
   cards: [],
   initialComments: [],
   favoriteCards: [],
+  filteredFavoriteCards: [],
   isOffersDataLoading: false,
   chosenOffer: null,
   offersNearby: [],
@@ -35,6 +37,9 @@ export const citiesData = createSlice({
     setFavoriteCards(state, { payload }: PayloadAction<CardType[]>) {
       state.favoriteCards = payload;
     },
+    setFilteredFavoriteCards(state, { payload }: PayloadAction<CardType[]>) {
+      state.filteredFavoriteCards = payload;
+    },
     resetSort(state) {
       state.cards = initialState.initialCards;
     },
@@ -53,6 +58,18 @@ export const citiesData = createSlice({
       );
       state.city = state.cards[0].city;
     },
+    filterFavoritesByCity(state, { payload }: PayloadAction<string>) {
+      const filteredFavoriteCards = state.favoriteCards.filter(
+        (card) => card.city.name === payload
+      );
+
+      if (!filteredFavoriteCards.length) {
+        return;
+      }
+
+      state.filteredFavoriteCards = filteredFavoriteCards;
+      state.city = state.filteredFavoriteCards[0].city;
+    },
   },
   extraReducers(builder) {
     builder
@@ -69,7 +86,9 @@ export const citiesData = createSlice({
         state.hasError = true;
       })
       .addCase(fetchCommentsAction.fulfilled, (state, action) => {
-        state.initialComments = action.payload;
+        state.initialComments = action.payload.sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
       })
       .addCase(fetchChosenOfferAction.fulfilled, (state, action) => {
         state.chosenOffer = action.payload;
@@ -79,6 +98,23 @@ export const citiesData = createSlice({
       })
       .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
         state.favoriteCards = action.payload;
+      })
+      .addCase(changeFavoriteStatusAction.fulfilled, (state, action) => {
+        const {
+          cards,
+          initialCards,
+          favoriteCards,
+          filteredFavoriteCards,
+          chosenOffer,
+          offersNearby,
+        } = action.payload;
+
+        state.cards = cards;
+        state.initialCards = initialCards;
+        state.favoriteCards = favoriteCards;
+        state.filteredFavoriteCards = filteredFavoriteCards;
+        state.chosenOffer = chosenOffer;
+        state.offersNearby = offersNearby;
       });
   },
 });
@@ -87,9 +123,11 @@ export const {
   setInitialCards,
   setCards,
   setFavoriteCards,
+  setFilteredFavoriteCards,
   resetSort,
   sortPriceLowToHigh,
   sortPriceHighToLow,
   sortByRating,
   filterByCity,
+  filterFavoritesByCity,
 } = citiesData.actions;

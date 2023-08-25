@@ -6,7 +6,7 @@ function ErrorScreen(): JSX.Element {
 
   return (
     <>
-      <p className="error__text">Не удалось загрузить вопросы</p>
+      <p className="error__text">Не удалось загрузить предложения</p>
       <button
         onClick={() => {
           dispatch(fetchOffersAction());

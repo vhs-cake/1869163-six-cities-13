@@ -18,7 +18,6 @@ function ReviewList({ offerId }: ReviewListProps) {
   const initialComments = useAppSelector(
     (state) => state[NameSpace.Data].initialComments
   );
-
   return (
     <ul className="reviews__list">
       {initialComments.slice(0, Setting.ReviewCountMax).map((comment) => (
@@ -27,6 +26,8 @@ function ReviewList({ offerId }: ReviewListProps) {
           name={comment.user.name}
           avatarUrl={comment.user.avatarUrl}
           commentText={comment.comment}
+          rating={comment.rating}
+          commentDate={comment.date}
         />
       ))}
     </ul>

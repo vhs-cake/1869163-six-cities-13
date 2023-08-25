@@ -15,7 +15,11 @@ import LoginRoute from '../private-route/login-route';
 import { useAuthorizationStatus } from '../../hooks/use-authorization-status';
 import ErrorScreen from '../../pages/error-screen/error-screen';
 import { useEffect } from 'react';
-import { checkAuthAction, fetchOffersAction } from '../../store/api-actions';
+import {
+  checkAuthAction,
+  fetchFavoritesAction,
+  fetchOffersAction,
+} from '../../store/api-actions';
 
 function App(): JSX.Element {
   const { isUnknown } = useAuthorizationStatus();
@@ -28,7 +32,8 @@ function App(): JSX.Element {
   useEffect(() => {
     dispatch(fetchOffersAction());
     dispatch(checkAuthAction());
-  }, []);
+    dispatch(fetchFavoritesAction());
+  }, [dispatch]);
 
   if (isUnknown || isOffersDataLoading) {
     return <LoadingScreen />;

@@ -3,8 +3,13 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
 import { useAuthorizationStatus } from '../../hooks/use-authorization-status';
 import { NameSpace } from '../../const';
+import { CardType } from '../../types/offer';
 
-function Navigation(): JSX.Element {
+type favoriteCardsProps = {
+  favoriteCards: CardType[];
+};
+
+function Navigation({ favoriteCards }: favoriteCardsProps): JSX.Element {
   const { isAuth, isUnknown, isNoAuth } = useAuthorizationStatus();
 
   const dispatch = useAppDispatch();
@@ -45,7 +50,9 @@ function Navigation(): JSX.Element {
             >
               <div className="header__avatar-wrapper user__avatar-wrapper"></div>
               <span className="header__user-name user__name">{email}</span>
-              <span className="header__favorite-count">3</span>
+              <span className="header__favorite-count">
+                {favoriteCards.length}
+              </span>
             </Link>
           )}
         </li>

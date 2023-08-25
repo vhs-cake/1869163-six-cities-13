@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { NameSpace } from '../../const';
 import { setActiveCard } from '../../store/cities-process/cities-process';
 import { handleAddToFavorites } from '../favorites-card/utils';
+import StarRating from '../star-rating/star-rating';
 
 type CardProps = {
   card: CardType;
@@ -62,7 +63,7 @@ function Card({ card }: CardProps): JSX.Element {
           </div>
           {isAuth && (
             <button
-              onClick={() => handleAddToFavorites(card, dispatch)}
+              onClick={() => handleAddToFavorites(card)}
               className={classNames('place-card__bookmark-button button', {
                 'place-card__bookmark-button--active': card.isFavorite,
               })}
@@ -93,8 +94,7 @@ function Card({ card }: CardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: '80%' }} />
-            <span className="visually-hidden">Rating</span>
+            <StarRating rating={card.rating} />
           </div>
         </div>
         {activeCard && (
