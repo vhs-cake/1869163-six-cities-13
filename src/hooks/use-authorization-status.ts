@@ -1,9 +1,9 @@
 import { useAppSelector } from '.';
-import { AuthorizationStatus } from '../const';
+import { AuthorizationStatus, NameSpace } from '../const';
 
 function useAuthorizationStatus() {
   const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
+    (state) => state[NameSpace.User].authorizationStatus
   );
 
   const isAuth = authorizationStatus === AuthorizationStatus.Auth;

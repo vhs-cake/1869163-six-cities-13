@@ -1,38 +1,43 @@
-import { useState } from 'react';
+import { FormEvent } from 'react';
 import { Setting } from '../../const';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { postCommentAction } from '../../store/api-actions';
+import {
+  setCurrentComment,
+  setCurrentRating,
+} from '../../store/cities-process/cities-process';
 
 type ReviewFormProps = {
   offerId: string;
 };
 
 function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
-  const [comment, setComment] = useState('');
-  const [rating, setRating] = useState(1);
   const dispatch = useAppDispatch();
+  const comment = useAppSelector((state) => state.CITIES.currentComment);
+  const rating = useAppSelector((state) => state.CITIES.currentRating);
+  const isSubmitting = useAppSelector((state) => state.CITIES.isSubmitting);
 
   function handleChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
-    setComment(e.target.value);
+    dispatch(setCurrentComment(e.target.value));
   }
 
-  const handleCommentSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleCommentSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!comment) {
+    if (!comment || !rating) {
       return;
     }
 
     dispatch(postCommentAction({ offerId, comment, rating }));
-    setComment('');
   };
 
   const handleRatingInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setRating(Number(e.target.value));
+    dispatch(setCurrentRating(Number(e.target.value)));
 
   const isCommentValid =
     comment.length >= Setting.ReviewCharactersMin &&
-    comment.length <= Setting.ReviewCharactersMax;
+    comment.length <= Setting.ReviewCharactersMax &&
+    rating;
 
   return (
     <form
@@ -49,6 +54,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
           className="form__rating-input visually-hidden"
           name="rating"
           defaultValue={5}
+          checked={rating === 5}
           id="5-stars"
           type="radio"
           onChange={handleRatingInputChange}
@@ -66,6 +72,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
           className="form__rating-input visually-hidden"
           name="rating"
           defaultValue={4}
+          checked={rating === 4}
           id="4-stars"
           type="radio"
           onChange={handleRatingInputChange}
@@ -83,6 +90,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
           className="form__rating-input visually-hidden"
           name="rating"
           defaultValue={3}
+          checked={rating === 3}
           id="3-stars"
           type="radio"
           onChange={handleRatingInputChange}
@@ -100,6 +108,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
           className="form__rating-input visually-hidden"
           name="rating"
           defaultValue={2}
+          checked={rating === 2}
           id="2-stars"
           type="radio"
           onChange={handleRatingInputChange}
@@ -117,6 +126,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
           className="form__rating-input visually-hidden"
           name="rating"
           defaultValue={1}
+          checked={rating === 1}
           id="1-star"
           type="radio"
           onChange={handleRatingInputChange}
@@ -152,9 +162,9 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={!isCommentValid}
+          disabled={!isCommentValid || isSubmitting}
         >
-          Submit
+          {isSubmitting ? 'Submitting...' : 'Submit'}
         </button>
       </div>
     </form>

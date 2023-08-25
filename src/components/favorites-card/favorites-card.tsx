@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CardType } from '../../types/offer';
+import { handleAddToFavorites } from './utils';
 
 type FavoritesCardProps = {
   card: CardType;
@@ -12,6 +13,7 @@ function FavoritesCard({ card }: FavoritesCardProps): JSX.Element {
   function handleMouseOver() {
     setActiveCard(card);
   }
+
   return (
     <article
       onMouseOver={handleMouseOver}
@@ -40,6 +42,7 @@ function FavoritesCard({ card }: FavoritesCardProps): JSX.Element {
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
           <button
+            onClick={() => handleAddToFavorites(card)}
             className="place-card__bookmark-button place-card__bookmark-button--active button"
             type="button"
           >

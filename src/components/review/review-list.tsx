@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCommentsAction } from '../../store/api-actions';
-import ReviewItem from '../review-item/review-item';
-import { Setting } from '../../const';
+import ReviewItem from './review-item';
+import { NameSpace, Setting } from '../../const';
 
 type ReviewListProps = {
   offerId: string;
@@ -15,8 +15,9 @@ function ReviewList({ offerId }: ReviewListProps) {
     dispatch(fetchCommentsAction({ offerId: offerId }));
   }, [dispatch, offerId]);
 
-  const initialComments = useAppSelector((state) => state.initialComments);
-
+  const initialComments = useAppSelector(
+    (state) => state[NameSpace.Data].initialComments
+  );
   return (
     <ul className="reviews__list">
       {initialComments.slice(0, Setting.ReviewCountMax).map((comment) => (
@@ -25,6 +26,8 @@ function ReviewList({ offerId }: ReviewListProps) {
           name={comment.user.name}
           avatarUrl={comment.user.avatarUrl}
           commentText={comment.comment}
+          rating={comment.rating}
+          commentDate={comment.date}
         />
       ))}
     </ul>

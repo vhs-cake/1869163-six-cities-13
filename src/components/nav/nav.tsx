@@ -2,12 +2,18 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
 import { useAuthorizationStatus } from '../../hooks/use-authorization-status';
+import { NameSpace } from '../../const';
+import { CardType } from '../../types/offer';
 
-function Navigation(): JSX.Element {
+type favoriteCardsProps = {
+  favoriteCards: CardType[];
+};
+
+function Navigation({ favoriteCards }: favoriteCardsProps): JSX.Element {
   const { isAuth, isUnknown, isNoAuth } = useAuthorizationStatus();
 
   const dispatch = useAppDispatch();
-  const email = useAppSelector((state) => state.email);
+  const email = useAppSelector((state) => state[NameSpace.User].email);
 
   const handleLogout = () => {
     dispatch(logoutAction());
@@ -39,14 +45,14 @@ function Navigation(): JSX.Element {
 
           {isAuth && (
             <Link
-              to="/login"
+              to="/favorites"
               className="header__nav-link header__nav-link--profile"
             >
               <div className="header__avatar-wrapper user__avatar-wrapper"></div>
               <span className="header__user-name user__name">{email}</span>
-              <Link to="/favorites" className="header__favorite-count">
-                3
-              </Link>
+              <span className="header__favorite-count">
+                {favoriteCards.length}
+              </span>
             </Link>
           )}
         </li>
