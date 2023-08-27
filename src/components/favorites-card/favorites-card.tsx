@@ -1,17 +1,18 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CardType } from '../../types/offer';
 import { handleAddToFavorites } from './utils';
+import { useDispatch } from 'react-redux';
+import { setActiveCard } from '../../store/cities-process/cities-process';
 
 type FavoritesCardProps = {
   card: CardType;
 };
 
 function FavoritesCard({ card }: FavoritesCardProps): JSX.Element {
-  const [activeCard, setActiveCard] = useState(card);
+  const dispatch = useDispatch();
 
   function handleMouseOver() {
-    setActiveCard(card);
+    dispatch(setActiveCard(card));
   }
 
   return (
@@ -25,7 +26,7 @@ function FavoritesCard({ card }: FavoritesCardProps): JSX.Element {
         </div>
       )}
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <Link to={`/offer/${activeCard.id}`}>
+        <Link to={`/offer/${card.id}`}>
           <img
             className="place-card__image"
             src={card.previewImage}
@@ -59,7 +60,7 @@ function FavoritesCard({ card }: FavoritesCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/:${activeCard.id}`}>{card.title}</Link>
+          <Link to={`/offer/:${card.id}`}>{card.title}</Link>
         </h2>
         <p className="place-card__type">{card.type}</p>
       </div>

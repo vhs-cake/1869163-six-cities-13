@@ -4,13 +4,11 @@ import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/use-map';
 import { CardType } from '../../types/offer';
 import { CityType } from '../../types/city';
-import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
-import { ChosenOfferType } from '../../types/chosen-offer';
+import { NameSpace, URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
+import { useAppSelector } from '../../hooks';
 
 type MapProps = {
   cards: CardType[];
-  activeCard: CardType | null;
-  chosenOffer: ChosenOfferType | null;
   city: CityType;
 };
 
@@ -26,9 +24,12 @@ const currentCustomIcon = leaflet.icon({
   iconAnchor: [20, 40],
 });
 
-function Map({ cards, city, activeCard, chosenOffer }: MapProps): JSX.Element {
+function Map({ cards, city }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap({ mapRef, city });
+
+  const activeCard = useAppSelector((state) => state[NameSpace.Cities].activeCard);
+  const chosenOffer = useAppSelector((state) => state[NameSpace.Data].chosenOffer);
 
   useEffect(() => {
     if (map) {
