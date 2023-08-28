@@ -1,15 +1,14 @@
-import { CardType } from '../../types/offer';
-import Card from '../card/card';
+import { NameSpace } from '../../const';
+import { useAppSelector } from '../../hooks';
+import CardMemo from '../card/card';
 
-type CardListProps = {
-  cardsData: CardType[];
-};
+function CardList(): JSX.Element {
+  const cards = useAppSelector((state) => state[NameSpace.Data].cards);
 
-function CardList({ cardsData }: CardListProps): JSX.Element {
   return (
     <div className="cities__places-list places__list tabs__content">
-      {cardsData.map((card) => (
-        <Card key={card.id} card={card} />
+      {cards.map((card) => (
+        <CardMemo key={card.id} card={card} />
       ))}
     </div>
   );

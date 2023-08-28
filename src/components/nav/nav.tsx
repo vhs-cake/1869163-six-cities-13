@@ -3,14 +3,13 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
 import { useAuthorizationStatus } from '../../hooks/use-authorization-status';
 import { NameSpace } from '../../const';
-import { CardType } from '../../types/offer';
 
-type favoriteCardsProps = {
-  favoriteCards: CardType[];
-};
-
-function Navigation({ favoriteCards }: favoriteCardsProps): JSX.Element {
+function Navigation(): JSX.Element {
   const { isAuth, isUnknown, isNoAuth } = useAuthorizationStatus();
+
+  const favoriteCards = useAppSelector(
+    (state) => state[NameSpace.Data].favoriteCards
+  );
 
   const dispatch = useAppDispatch();
   const email = useAppSelector((state) => state[NameSpace.User].email);

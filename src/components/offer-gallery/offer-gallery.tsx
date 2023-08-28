@@ -1,17 +1,20 @@
+import { memo } from 'react';
 import OfferGalleryItem from './offer-gallery-item';
 
 type OfferGalleryProps = {
-  offerImagesUrls: string[] | undefined;
+  images: string[];
 };
 
-function OfferGallery({ offerImagesUrls }: OfferGalleryProps): JSX.Element {
+function OfferGallery({ images }: OfferGalleryProps): JSX.Element {
   return (
     <div className="offer__gallery">
-      {offerImagesUrls?.map((imgUrl) => (
+      {images.map((imgUrl) => (
         <OfferGalleryItem key={imgUrl} imgUrl={imgUrl} />
       ))}
     </div>
   );
 }
 
-export default OfferGallery;
+const OfferGalleryMemo = memo(OfferGallery);
+
+export default OfferGalleryMemo;
