@@ -1,4 +1,4 @@
-import StarRating from '../star-rating/star-rating';
+import StarRatingMemo from '../star-rating/star-rating';
 import { getFormattedDate } from './utils';
 
 type ReviewItemProps = {
@@ -33,7 +33,7 @@ function ReviewItem({
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <StarRating rating={rating} />
+            <StarRatingMemo rating={rating} />
           </div>
         </div>
         <p className="reviews__text">{commentText}</p>

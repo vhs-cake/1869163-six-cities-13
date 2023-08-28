@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, memo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCommentsAction } from '../../store/api-actions';
 import ReviewItem from './review-item';
@@ -34,4 +34,6 @@ function ReviewList({ offerId }: ReviewListProps) {
   );
 }
 
-export default ReviewList;
+const ReviewListMemo = memo(ReviewList);
+
+export default ReviewListMemo;

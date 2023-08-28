@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, memo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import FavoritesCard from './favorites-card';
 import { fetchFavoritesAction } from '../../store/api-actions';
@@ -24,4 +24,6 @@ function FavoritesCardList(): JSX.Element {
   );
 }
 
-export default FavoritesCardList;
+const FavoritesCardListMemo = memo(FavoritesCardList);
+
+export default FavoritesCardListMemo;

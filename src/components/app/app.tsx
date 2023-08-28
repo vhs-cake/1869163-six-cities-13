@@ -23,17 +23,24 @@ import {
 
 function App(): JSX.Element {
   const { isUnknown } = useAuthorizationStatus();
+  const hasError = useAppSelector((state) => state[NameSpace.Data].hasError);
   const isOffersDataLoading = useAppSelector(
     (state) => state[NameSpace.Data].isOffersDataLoading
   );
-  const hasError = useAppSelector((state) => state[NameSpace.Data].hasError);
+  const cardsNumber = useAppSelector(
+    (state) => state[NameSpace.Data].cards.length
+  );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    if (cardsNumber) {
+      return;
+    }
+
     dispatch(fetchOffersAction());
-    dispatch(checkAuthAction());
     dispatch(fetchFavoritesAction());
-  }, [dispatch]);
+    dispatch(checkAuthAction());
+  }, [cardsNumber, dispatch]);
 
   if (isUnknown || isOffersDataLoading) {
     return <LoadingScreen />;

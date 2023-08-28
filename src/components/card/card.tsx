@@ -1,12 +1,12 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { CardType } from '../../types/offer';
 import { useAuthorizationStatus } from '../../hooks/use-authorization-status';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch } from '../../hooks';
 import classNames from 'classnames';
-import { NameSpace } from '../../const';
 import { setActiveCard } from '../../store/cities-process/cities-process';
 import { handleAddToFavorites } from '../favorites-card/utils';
-import StarRating from '../star-rating/star-rating';
+import StarRatingMemo from '../star-rating/star-rating';
 
 type CardProps = {
   card: CardType;
@@ -14,9 +14,16 @@ type CardProps = {
 
 function Card({ card }: CardProps): JSX.Element {
   const { isAuth, isUnknown, isNoAuth } = useAuthorizationStatus();
-  const activeCard = useAppSelector(
-    (state) => state[NameSpace.Cities].activeCard
-  );
+  const {
+    isFavorite,
+    isPremium,
+    previewImage,
+    price,
+    rating,
+    title,
+    type,
+    id,
+  } = card;
 
   const dispatch = useAppDispatch();
 
@@ -26,46 +33,33 @@ function Card({ card }: CardProps): JSX.Element {
 
   return (
     <article onMouseOver={handleMouseOver} className="cities__card place-card">
-      {card.isPremium && (
+      {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        {activeCard && (
-          <Link to={`/offer/${activeCard.id}`}>
-            <img
-              className="place-card__image"
-              src={card.previewImage}
-              width={260}
-              height={200}
-              alt="Place image"
-            />
-          </Link>
-        )}
-        {!activeCard && (
-          <a href="#">
-            <img
-              className="place-card__image"
-              src={card.previewImage}
-              width={260}
-              height={200}
-              alt="Place image"
-            />
-          </a>
-        )}
+        <Link to={`/offer/${id}`}>
+          <img
+            className="place-card__image"
+            src={previewImage}
+            width={260}
+            height={200}
+            alt="Place image"
+          />
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">€{card.price}</b>
+            <b className="place-card__price-value">€{price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
           {isAuth && (
             <button
               onClick={() => handleAddToFavorites(card)}
               className={classNames('place-card__bookmark-button button', {
-                'place-card__bookmark-button--active': card.isFavorite,
+                'place-card__bookmark-button--active': isFavorite,
               })}
               type="button"
             >
@@ -94,23 +88,18 @@ function Card({ card }: CardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <StarRating rating={card.rating} />
+            <StarRatingMemo rating={rating} />
           </div>
         </div>
-        {activeCard && (
-          <h2 className="place-card__name">
-            <Link to={`/offer/${activeCard.id}`}>{card.title}</Link>
-          </h2>
-        )}
-        {!activeCard && (
-          <h2 className="place-card__name">
-            <a href="#">{card.title}</a>
-          </h2>
-        )}
-        <p className="place-card__type">{card.type}</p>
+        <h2 className="place-card__name">
+          <Link to={`/offer/${id}`}>{title}</Link>
+        </h2>
+        <p className="place-card__type">{type}</p>
       </div>
     </article>
   );
 }
 
-export default Card;
+const CardMemo = memo(Card);
+
+export default CardMemo;

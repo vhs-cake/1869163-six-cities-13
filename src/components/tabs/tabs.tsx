@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import TabItem from './tab-item';
 
 type TabsProps = {
@@ -18,4 +19,6 @@ function Tabs({ cities }: TabsProps): JSX.Element {
   );
 }
 
-export default Tabs;
+const TabsMemo = memo(Tabs);
+
+export default TabsMemo;

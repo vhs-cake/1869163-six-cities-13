@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { FormEvent, memo } from 'react';
 import { Setting } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { postCommentAction } from '../../store/api-actions';
@@ -171,4 +171,6 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
   );
 }
 
-export default ReviewForm;
+const ReviewFormMemo = memo(ReviewForm);
+
+export default ReviewFormMemo;
