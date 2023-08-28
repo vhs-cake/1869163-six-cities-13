@@ -14,11 +14,11 @@ import { handleAddToFavorites } from '../../components/favorites-card/utils';
 import LoadingScreen from '../loading-screen/loading-screen';
 import HeaderMemo from '../../components/header/header';
 import OfferGalleryMemo from '../../components/offer-gallery/offer-gallery';
-import OfferGoodsListMemo from '../../components/offer-goods/offer-goods-list';
 import OfferNearPlacesListMemo from '../../components/offer-near-places/offer-near-places-list';
 import ReviewFormMemo from '../../components/review/review-form';
 import ReviewListMemo from '../../components/review/review-list';
 import StarRatingMemo from '../../components/star-rating/star-rating';
+import OfferGoodsMemo from '../../components/offer-goods/offer-goods';
 
 function OfferPage(): JSX.Element {
   const initialComments = useAppSelector(
@@ -146,7 +146,7 @@ function OfferPage(): JSX.Element {
               </div>
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
-                <OfferGoodsListMemo goods={chosenOffer.goods} />
+                <OfferGoodsMemo goods={chosenOffer.goods} />
               </div>
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>

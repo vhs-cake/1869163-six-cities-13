@@ -11,7 +11,7 @@ import {
   sortPriceHighToLow,
   sortPriceLowToHigh,
 } from '../../store/cities-data/cities-data';
-import { NameSpace } from '../../const';
+import { CardSort, NameSpace } from '../../const';
 import MainPageEmpty from './main-page-empty';
 import HeaderMemo from '../../components/header/header';
 import TabsMemo from '../../components/tabs/tabs';
@@ -30,7 +30,7 @@ function MainPage(): JSX.Element {
   );
 
   const [SortOpeningState, setSortOpeningState] = useState(false);
-  const [activeSort, setActiveSort] = useState('Popular');
+  const [activeSort, setActiveSort] = useState(CardSort.POPULAR);
 
   const dispatch = useAppDispatch();
 
@@ -39,7 +39,7 @@ function MainPage(): JSX.Element {
   }, [dispatch]);
 
   useEffect(() => {
-    setActiveSort('Popular');
+    setActiveSort(CardSort.POPULAR);
   }, [city]);
 
   function handleSortOpening() {
@@ -88,7 +88,7 @@ function MainPage(): JSX.Element {
                       tabIndex={0}
                       onClick={() => {
                         dispatch(filterByCity(city.name));
-                        setActiveSort('Popular');
+                        setActiveSort(CardSort.POPULAR);
                       }}
                     >
                       Popular
@@ -98,7 +98,7 @@ function MainPage(): JSX.Element {
                       tabIndex={0}
                       onClick={() => {
                         dispatch(sortPriceLowToHigh());
-                        setActiveSort('Price: low to high');
+                        setActiveSort(CardSort.LOW_TO_HIGH);
                       }}
                     >
                       Price: low to high
@@ -108,7 +108,7 @@ function MainPage(): JSX.Element {
                       tabIndex={0}
                       onClick={() => {
                         dispatch(sortPriceHighToLow());
-                        setActiveSort('Price: high to low');
+                        setActiveSort(CardSort.HIGH_TO_LOW);
                       }}
                     >
                       Price: high to low
@@ -118,7 +118,7 @@ function MainPage(): JSX.Element {
                       tabIndex={0}
                       onClick={() => {
                         dispatch(sortByRating());
-                        setActiveSort('Top rated first');
+                        setActiveSort(CardSort.TOP_RATED_FIRST);
                       }}
                     >
                       Top rated first

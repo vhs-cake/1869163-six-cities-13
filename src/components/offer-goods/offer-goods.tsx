@@ -1,10 +1,10 @@
 import { memo } from 'react';
 
-type OfferGoodsListProps = {
+type OfferGoodsProps = {
   goods: string[];
 };
 
-function OfferGoodsList({ goods }: OfferGoodsListProps): JSX.Element {
+function OfferGoods({ goods }: OfferGoodsProps): JSX.Element {
   return (
     <ul className="offer__inside-list">
       {goods.map((goodsItem) => (
@@ -16,6 +16,6 @@ function OfferGoodsList({ goods }: OfferGoodsListProps): JSX.Element {
   );
 }
 
-const OfferGoodsListMemo = memo(OfferGoodsList);
+const OfferGoodsMemo = memo(OfferGoods);
 
-export default OfferGoodsListMemo;
+export default OfferGoodsMemo;
