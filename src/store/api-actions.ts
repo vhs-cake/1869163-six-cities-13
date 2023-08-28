@@ -220,6 +220,7 @@ export const loginAction = createAsyncThunk<
     saveToken(token);
 
     dispatch(setEmail(email));
+    dispatch(fetchFavoritesAction());
     dispatch(redirectToRoute(AppRoute.Root));
   }
 );
