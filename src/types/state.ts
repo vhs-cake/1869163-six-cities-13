@@ -23,7 +23,6 @@ export type CitiesData = {
   cards: CardType[];
   initialComments: CommentType[];
   favoriteCards: CardType[];
-  filteredFavoriteCards: CardType[];
   isOffersDataLoading: boolean;
   chosenOffer: ChosenOfferType | null;
   offersNearby: CardType[];

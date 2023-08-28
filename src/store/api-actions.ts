@@ -100,7 +100,6 @@ export const changeFavoriteStatusAction = createAsyncThunk<
     cards: CardType[];
     initialCards: CardType[];
     favoriteCards: CardType[];
-    filteredFavoriteCards: CardType[];
     chosenOffer: ChosenOfferType | null;
     offersNearby: CardType[];
   },
@@ -121,7 +120,6 @@ export const changeFavoriteStatusAction = createAsyncThunk<
     const initialCards = getState().DATA.initialCards;
     const cards = getState().DATA.cards;
     const favoriteCards = [...getState().DATA.favoriteCards];
-    const filteredFavoriteCards = [...getState().DATA.filteredFavoriteCards];
     const chosenOffer = getState().DATA.chosenOffer;
     const offersNearby = [...getState().DATA.offersNearby];
 
@@ -156,9 +154,6 @@ export const changeFavoriteStatusAction = createAsyncThunk<
       initialCards: getUpdatedCards(initialCards),
       offersNearby: getUpdatedCards(offersNearby, true),
       favoriteCards: getUpdatedCards(favoriteCards).filter(
-        (card) => card.isFavorite
-      ),
-      filteredFavoriteCards: getUpdatedCards(filteredFavoriteCards).filter(
         (card) => card.isFavorite
       ),
       chosenOffer:

@@ -16,7 +16,6 @@ const initialState: CitiesData = {
   cards: [],
   initialComments: [],
   favoriteCards: [],
-  filteredFavoriteCards: [],
   isOffersDataLoading: false,
   chosenOffer: null,
   offersNearby: [],
@@ -37,9 +36,6 @@ export const citiesData = createSlice({
     setFavoriteCards(state, { payload }: PayloadAction<CardType[]>) {
       state.favoriteCards = payload;
     },
-    setFilteredFavoriteCards(state, { payload }: PayloadAction<CardType[]>) {
-      state.filteredFavoriteCards = payload;
-    },
     resetSort(state) {
       state.cards = initialState.initialCards;
     },
@@ -57,18 +53,6 @@ export const citiesData = createSlice({
         (card) => card.city.name === payload
       );
       state.city = state.cards[0].city;
-    },
-    filterFavoritesByCity(state, { payload }: PayloadAction<string>) {
-      const filteredFavoriteCards = state.favoriteCards.filter(
-        (card) => card.city.name === payload
-      );
-
-      if (!filteredFavoriteCards.length) {
-        return;
-      }
-
-      state.filteredFavoriteCards = filteredFavoriteCards;
-      state.city = state.filteredFavoriteCards[0].city;
     },
   },
   extraReducers(builder) {
@@ -104,7 +88,6 @@ export const citiesData = createSlice({
           cards,
           initialCards,
           favoriteCards,
-          filteredFavoriteCards,
           chosenOffer,
           offersNearby,
         } = action.payload;
@@ -112,7 +95,6 @@ export const citiesData = createSlice({
         state.cards = cards;
         state.initialCards = initialCards;
         state.favoriteCards = favoriteCards;
-        state.filteredFavoriteCards = filteredFavoriteCards;
         state.chosenOffer = chosenOffer;
         state.offersNearby = offersNearby;
       });
@@ -123,11 +105,9 @@ export const {
   setInitialCards,
   setCards,
   setFavoriteCards,
-  setFilteredFavoriteCards,
   resetSort,
   sortPriceLowToHigh,
   sortPriceHighToLow,
   sortByRating,
   filterByCity,
-  filterFavoritesByCity,
 } = citiesData.actions;
