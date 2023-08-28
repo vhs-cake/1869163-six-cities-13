@@ -20,6 +20,10 @@ export const citiesProcess = createSlice({
       state.error = payload;
     },
     setActiveCard(state, { payload }: PayloadAction<CardType | null>) {
+      if (state.activeCard?.id === payload?.id) {
+        return;
+      }
+
       state.activeCard = payload;
     },
     setCurrentComment(state, { payload }: PayloadAction<string>) {

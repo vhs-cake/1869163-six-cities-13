@@ -5,8 +5,8 @@ import { useAuthorizationStatus } from '../../hooks/use-authorization-status';
 import { useAppDispatch } from '../../hooks';
 import classNames from 'classnames';
 import { setActiveCard } from '../../store/cities-process/cities-process';
-import { handleAddToFavorites } from '../favorites-card/utils';
-import StarRatingMemo from '../star-rating/star-rating';
+import StarRating from '../star-rating/star-rating';
+import { changeFavoriteStatusAction } from '../../store/api-actions';
 
 type CardProps = {
   card: CardType;
@@ -57,7 +57,9 @@ function Card({ card }: CardProps): JSX.Element {
           </div>
           {isAuth && (
             <button
-              onClick={() => handleAddToFavorites(card)}
+              onClick={() => {
+                dispatch(changeFavoriteStatusAction(card));
+              }}
               className={classNames('place-card__bookmark-button button', {
                 'place-card__bookmark-button--active': isFavorite,
               })}
@@ -88,7 +90,7 @@ function Card({ card }: CardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <StarRatingMemo rating={rating} />
+            <StarRating rating={rating} />
           </div>
         </div>
         <h2 className="place-card__name">

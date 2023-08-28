@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { setActiveCard } from '../../store/cities-process/cities-process';
 import { CardType } from '../../types/offer';
-import { handleAddToFavorites } from '../favorites-card/utils';
-import StarRatingMemo from '../star-rating/star-rating';
+import StarRating from '../star-rating/star-rating';
+import { changeFavoriteStatusAction } from '../../store/api-actions';
 
 type OfferNearPlacesItemProps = {
   card: CardType;
@@ -61,7 +61,7 @@ function OfferNearPlacesItem({ card }: OfferNearPlacesItemProps): JSX.Element {
           {isAuth && (
             <button
               onClick={() => {
-                handleAddToFavorites(card);
+                dispatch(changeFavoriteStatusAction(card));
               }}
               className={classNames('place-card__bookmark-button button', {
                 'place-card__bookmark-button--active': isFavorite,
@@ -101,7 +101,7 @@ function OfferNearPlacesItem({ card }: OfferNearPlacesItemProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <StarRatingMemo rating={rating} />
+            <StarRating rating={rating} />
           </div>
         </div>
         <h2 className="place-card__name">

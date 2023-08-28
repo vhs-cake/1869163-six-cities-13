@@ -3,7 +3,7 @@ import { useAppSelector } from '../../hooks';
 import { NameSpace } from '../../const';
 import FavoritesPageEmpty from './favorites-page-empty';
 import { useMemo } from 'react';
-import HeaderMemo from '../../components/header/header';
+import Header from '../../components/header/header';
 import FavoritesListMemo from '../../components/favorites-card/favorites-list';
 
 function FavoritesPage(): JSX.Element {
@@ -21,7 +21,7 @@ function FavoritesPage(): JSX.Element {
       <Helmet>
         <title>6 cities. Your favorites</title>
       </Helmet>
-      <HeaderMemo />
+      <Header />
       <main className="page__main page__main--favorites">
         {favoriteCards.length === 0 && <FavoritesPageEmpty />}
         {favoriteCards.length !== 0 && (

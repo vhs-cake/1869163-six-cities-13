@@ -1,19 +1,19 @@
 import { Link } from 'react-router-dom';
 import { CardType } from '../../types/offer';
-import { handleAddToFavorites } from './utils';
-import { useDispatch } from 'react-redux';
 import { setActiveCard } from '../../store/cities-process/cities-process';
+import { changeFavoriteStatusAction } from '../../store/api-actions';
+import { useAppDispatch } from '../../hooks';
 
 type FavoritesCardProps = {
   card: CardType;
 };
 
 function FavoritesCard({ card }: FavoritesCardProps): JSX.Element {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  function handleMouseOver() {
+  const handleMouseOver = () => {
     dispatch(setActiveCard(card));
-  }
+  };
 
   return (
     <article
@@ -43,7 +43,9 @@ function FavoritesCard({ card }: FavoritesCardProps): JSX.Element {
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
           <button
-            onClick={() => handleAddToFavorites(card)}
+            onClick={() => {
+              dispatch(changeFavoriteStatusAction(card));
+            }}
             className="place-card__bookmark-button place-card__bookmark-button--active button"
             type="button"
           >

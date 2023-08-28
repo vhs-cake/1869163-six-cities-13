@@ -45,8 +45,6 @@ export type CheckAuthResponse = {
 };
 
 export type ChangeFavoriteResponse = {
-  data: {
-    id: string;
-    isFavorite: boolean;
-  };
+  id: string;
+  isFavorite: boolean;
 };

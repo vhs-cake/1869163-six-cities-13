@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { CardType } from '../../types/offer';
-import OfferNearPlacesItemMemo from './offer-near-places-item';
+import OfferNearPlacesItem from './offer-near-places-item';
 
 type OfferNearPlacesListProps = {
   offersNearby: CardType[];
@@ -12,7 +12,7 @@ function OfferNearPlacesList({
   return (
     <div className="near-places__list places__list">
       {offersNearby.map((offer) => (
-        <OfferNearPlacesItemMemo key={offer.id} card={offer} />
+        <OfferNearPlacesItem key={offer.id} card={offer} />
       ))}
     </div>
   );

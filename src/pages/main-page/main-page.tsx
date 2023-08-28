@@ -13,8 +13,8 @@ import {
 } from '../../store/cities-data/cities-data';
 import { CardSort, NameSpace } from '../../const';
 import MainPageEmpty from './main-page-empty';
-import HeaderMemo from '../../components/header/header';
-import TabsMemo from '../../components/tabs/tabs';
+import Header from '../../components/header/header';
+import Tabs from '../../components/tabs/tabs';
 
 function MainPage(): JSX.Element {
   const cards = useAppSelector((state) => state[NameSpace.Data].cards);
@@ -51,10 +51,10 @@ function MainPage(): JSX.Element {
       <Helmet>
         <title>6 cities. Main page</title>
       </Helmet>
-      <HeaderMemo />
+      <Header />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <TabsMemo cities={cities} />
+        <Tabs cities={cities} />
         {cards.length === 0 && <MainPageEmpty city={city} />}
         {cards.length !== 0 && (
           <div className="cities">

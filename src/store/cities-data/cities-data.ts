@@ -84,19 +84,47 @@ export const citiesData = createSlice({
         state.favoriteCards = action.payload;
       })
       .addCase(changeFavoriteStatusAction.fulfilled, (state, action) => {
-        const {
-          cards,
-          initialCards,
-          favoriteCards,
-          chosenOffer,
-          offersNearby,
-        } = action.payload;
+        const { id, isFavorite } = action.payload;
 
-        state.cards = cards;
-        state.initialCards = initialCards;
-        state.favoriteCards = favoriteCards;
-        state.chosenOffer = chosenOffer;
-        state.offersNearby = offersNearby;
+        const updatedCard = {
+          ...state.initialCards.filter((card) => card.id === id)[0],
+          isFavorite: isFavorite,
+        };
+
+        function getUpdatedCards(
+          cardsToUpdate: CardType[],
+          forceIgnorePushToUpdate?: boolean
+        ) {
+          if (
+            !cardsToUpdate.some((card) => card.id === id) &&
+            !forceIgnorePushToUpdate
+          ) {
+            cardsToUpdate.push(updatedCard);
+          }
+
+          const updatedCards = cardsToUpdate.map((card) => {
+            if (card.id === updatedCard.id) {
+              return updatedCard;
+            }
+            return card;
+          });
+
+          return updatedCards;
+        }
+
+        state.cards = getUpdatedCards(state.cards);
+
+        state.initialCards = getUpdatedCards(state.initialCards);
+
+        state.offersNearby = getUpdatedCards(state.offersNearby, true);
+
+        state.favoriteCards = getUpdatedCards(state.favoriteCards).filter(
+          (card) => card.isFavorite
+        );
+
+        if (state.chosenOffer?.id === id) {
+          state.chosenOffer = { ...state.chosenOffer, isFavorite: isFavorite };
+        }
       });
   },
 });

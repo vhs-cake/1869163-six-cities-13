@@ -4,21 +4,21 @@ import Map from '../../components/map/map';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useAuthorizationStatus } from '../../hooks/use-authorization-status';
 import {
+  changeFavoriteStatusAction,
   fetchChosenOfferAction,
   fetchOffersNearbyAction,
 } from '../../store/api-actions';
 import { useEffect } from 'react';
 import classNames from 'classnames';
 import { NameSpace, Setting } from '../../const';
-import { handleAddToFavorites } from '../../components/favorites-card/utils';
 import LoadingScreen from '../loading-screen/loading-screen';
-import HeaderMemo from '../../components/header/header';
-import OfferGalleryMemo from '../../components/offer-gallery/offer-gallery';
-import OfferNearPlacesListMemo from '../../components/offer-near-places/offer-near-places-list';
+import Header from '../../components/header/header';
+import OfferGallery from '../../components/offer-gallery/offer-gallery';
+import OfferNearPlacesList from '../../components/offer-near-places/offer-near-places-list';
 import ReviewFormMemo from '../../components/review/review-form';
-import ReviewListMemo from '../../components/review/review-list';
-import StarRatingMemo from '../../components/star-rating/star-rating';
-import OfferGoodsMemo from '../../components/offer-goods/offer-goods';
+import ReviewList from '../../components/review/review-list';
+import StarRating from '../../components/star-rating/star-rating';
+import OfferGoods from '../../components/offer-goods/offer-goods';
 
 function OfferPage(): JSX.Element {
   const initialComments = useAppSelector(
@@ -53,12 +53,12 @@ function OfferPage(): JSX.Element {
       <Helmet>
         <title>6 cities. Chosen offer</title>
       </Helmet>
-      <HeaderMemo />
+      <Header />
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
             {chosenOffer?.images && (
-              <OfferGalleryMemo images={chosenOffer.images} />
+              <OfferGallery images={chosenOffer.images} />
             )}
           </div>
           <div className="offer__container container">
@@ -72,7 +72,9 @@ function OfferPage(): JSX.Element {
                 <h1 className="offer__name">{chosenOffer.title}</h1>
                 {isAuth && (
                   <button
-                    onClick={() => handleAddToFavorites(chosenOffer)}
+                    onClick={() => {
+                      dispatch(changeFavoriteStatusAction(chosenOffer));
+                    }}
                     className={classNames('offer__bookmark-button button', {
                       'offer__bookmark-button--active': chosenOffer.isFavorite,
                     })}
@@ -123,7 +125,7 @@ function OfferPage(): JSX.Element {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <StarRatingMemo rating={chosenOffer.rating} />
+                  <StarRating rating={chosenOffer.rating} />
                 </div>
                 <span className="offer__rating-value rating__value">
                   {chosenOffer.rating}
@@ -146,7 +148,7 @@ function OfferPage(): JSX.Element {
               </div>
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
-                <OfferGoodsMemo goods={chosenOffer.goods} />
+                <OfferGoods goods={chosenOffer.goods} />
               </div>
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
@@ -185,7 +187,7 @@ function OfferPage(): JSX.Element {
                     {initialComments.length}
                   </span>
                 </h2>
-                <ReviewListMemo offerId={id} />
+                <ReviewList offerId={id} />
                 {isAuth && <ReviewFormMemo offerId={id}></ReviewFormMemo>}
               </section>
             </div>
@@ -201,7 +203,7 @@ function OfferPage(): JSX.Element {
             <h2 className="near-places__title">
               Other places in the neighbourhood
             </h2>
-            <OfferNearPlacesListMemo offersNearby={offersNearby} />
+            <OfferNearPlacesList offersNearby={offersNearby} />
           </section>
         </div>
       </main>
