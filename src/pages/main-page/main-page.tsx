@@ -14,18 +14,17 @@ import { CardSort, NameSpace, cities } from '../../const';
 import MainPageEmpty from './main-page-empty';
 import Header from '../../components/header/header';
 import Tabs from '../../components/tab-item/tabs';
+import { activeCityNameSelector, cardsSelector } from '../../store/selectors';
 
 function MainPage(): JSX.Element {
-  const cards = useAppSelector((state) => state[NameSpace.Data].cards);
+  const cards = useAppSelector(cardsSelector);
 
   const initialCards = useAppSelector(
     (state) => state[NameSpace.Data].initialCards
   );
 
   const city = useAppSelector((state) => state[NameSpace.Data].city);
-  const activeCityName = useAppSelector(
-    (state) => state[NameSpace.Data].activeCityName
-  );
+  const activeCityName = useAppSelector(activeCityNameSelector);
 
   const [SortOpeningState, setSortOpeningState] = useState(false);
   const [activeSort, setActiveSort] = useState(CardSort.POPULAR);

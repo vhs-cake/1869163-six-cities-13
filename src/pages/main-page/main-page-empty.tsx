@@ -1,10 +1,8 @@
 import { useAppSelector } from '../../hooks';
-import { NameSpace } from '../../const';
+import { activeCityNameSelector } from '../../store/selectors';
 
 function MainPageEmpty(): JSX.Element {
-  const activeCityName = useAppSelector(
-    (state) => state[NameSpace.Data].activeCityName
-  );
+  const activeCityName = useAppSelector(activeCityNameSelector);
 
   return (
     <div className="cities__places-container cities__places-container--empty container">
