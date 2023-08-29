@@ -24,7 +24,7 @@ function OfferNearPlacesItem({ card }: OfferNearPlacesItemProps): JSX.Element {
     id,
   } = card;
 
-  const { isAuth, isUnknown, isNoAuth } = useAuthorizationStatus();
+  const { isAuth, isNoAuth } = useAuthorizationStatus();
   const dispatch = useAppDispatch();
 
   function handleMouseOver() {
@@ -75,18 +75,6 @@ function OfferNearPlacesItem({ card }: OfferNearPlacesItemProps): JSX.Element {
             </button>
           )}
           {isNoAuth && (
-            <Link
-              to="/login"
-              className="place-card__bookmark-button button"
-              type="button"
-            >
-              <svg className="place-card__bookmark-icon" width={18} height={19}>
-                <use xlinkHref="#icon-bookmark" />
-              </svg>
-              <span className="visually-hidden">In bookmarks</span>
-            </Link>
-          )}
-          {isUnknown && (
             <Link
               to="/login"
               className="place-card__bookmark-button button"

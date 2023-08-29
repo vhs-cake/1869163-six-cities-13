@@ -5,7 +5,7 @@ import { useAuthorizationStatus } from '../../hooks/use-authorization-status';
 import { NameSpace } from '../../const';
 
 function Navigation(): JSX.Element {
-  const { isAuth, isUnknown, isNoAuth } = useAuthorizationStatus();
+  const { isAuth, isNoAuth } = useAuthorizationStatus();
 
   const favoriteCards = useAppSelector(
     (state) => state[NameSpace.Data].favoriteCards
@@ -22,16 +22,6 @@ function Navigation(): JSX.Element {
     <nav className="header__nav">
       <ul className="header__nav-list">
         <li className="header__nav-item user">
-          {isUnknown && (
-            <Link
-              to="/login"
-              className="header__nav-link header__nav-link--profile"
-            >
-              <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-              <span className="header__login">Sign in</span>
-            </Link>
-          )}
-
           {isNoAuth && (
             <Link
               to="/login"

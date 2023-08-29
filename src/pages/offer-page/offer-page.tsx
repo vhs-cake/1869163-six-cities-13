@@ -32,7 +32,7 @@ function OfferPage(): JSX.Element {
   );
 
   const dispatch = useAppDispatch();
-  const { isAuth, isUnknown, isNoAuth } = useAuthorizationStatus();
+  const { isAuth, isNoAuth } = useAuthorizationStatus();
   const id = useParams().id || '';
 
   useEffect(() => {
@@ -91,22 +91,6 @@ function OfferPage(): JSX.Element {
                   </button>
                 )}
                 {isNoAuth && (
-                  <Link
-                    to="/login"
-                    className="offer__bookmark-button button"
-                    type="button"
-                  >
-                    <svg
-                      className="offer__bookmark-icon"
-                      width={31}
-                      height={33}
-                    >
-                      <use xlinkHref="#icon-bookmark" />
-                    </svg>
-                    <span className="visually-hidden">To bookmarks</span>
-                  </Link>
-                )}
-                {isUnknown && (
                   <Link
                     to="/login"
                     className="offer__bookmark-button button"
