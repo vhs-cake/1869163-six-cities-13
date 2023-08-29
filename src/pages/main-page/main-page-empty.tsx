@@ -1,10 +1,11 @@
-import { CityType } from '../../types/city';
+import { useAppSelector } from '../../hooks';
+import { NameSpace } from '../../const';
 
-type MainPageEmptyProps = {
-  city: CityType;
-};
+function MainPageEmpty(): JSX.Element {
+  const activeCityName = useAppSelector(
+    (state) => state[NameSpace.Data].activeCityName
+  );
 
-function MainPageEmpty({ city }: MainPageEmptyProps): JSX.Element {
   return (
     <div className="cities__places-container cities__places-container--empty container">
       <section className="cities__no-places">
@@ -12,7 +13,7 @@ function MainPageEmpty({ city }: MainPageEmptyProps): JSX.Element {
           <b className="cities__status">No places to stay available</b>
           <p className="cities__status-description">
             We could not find any property available at the moment in{' '}
-            {city.name}
+            {activeCityName}
           </p>
         </div>
       </section>

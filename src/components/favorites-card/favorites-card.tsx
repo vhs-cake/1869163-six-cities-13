@@ -65,7 +65,7 @@ function FavoritesCard({ card }: FavoritesCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/:${card.id}`}>{card.title}</Link>
+          <Link to={`/offer/${card.id}`}>{card.title}</Link>
         </h2>
         <p className="place-card__type">{apartmentType}</p>
       </div>

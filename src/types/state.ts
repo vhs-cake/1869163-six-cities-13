@@ -19,15 +19,17 @@ export type CitiesProcess = {
 };
 
 export type CitiesData = {
-  initialCards: CardType[];
-  cards: CardType[];
-  initialComments: CommentType[];
+  initialCards?: CardType[];
+  cards?: CardType[];
+  initialComments?: CommentType[];
   favoriteCards: CardType[];
   isOffersDataLoading: boolean;
+  isChosenOfferLoading: boolean;
   chosenOffer: ChosenOfferType | null;
-  offersNearby: CardType[];
-  randomOffersNearby: CardType[];
-  city: CityType;
+  offersNearby?: CardType[];
+  randomOffersNearby?: CardType[];
+  city?: CityType;
+  activeCityName: string;
   hasError: boolean;
 };
 

@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import CardList from '../../components/card/card-list';
 import Map from '../../components/map/map';
@@ -11,7 +10,7 @@ import {
   sortPriceHighToLow,
   sortPriceLowToHigh,
 } from '../../store/cities-data/cities-data';
-import { CardSort, NameSpace } from '../../const';
+import { CardSort, NameSpace, cities } from '../../const';
 import MainPageEmpty from './main-page-empty';
 import Header from '../../components/header/header';
 import Tabs from '../../components/tab-item/tabs';
@@ -24,9 +23,8 @@ function MainPage(): JSX.Element {
   );
 
   const city = useAppSelector((state) => state[NameSpace.Data].city);
-  const cities = useMemo(
-    () => [...new Set(initialCards.map((card) => card.city.name))],
-    [initialCards]
+  const activeCityName = useAppSelector(
+    (state) => state[NameSpace.Data].activeCityName
   );
 
   const [SortOpeningState, setSortOpeningState] = useState(false);
@@ -35,16 +33,17 @@ function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    if (!city) {
+      return;
+    }
     dispatch(filterByCity(city.name));
-  }, [city.name, dispatch]);
+  }, [city, city?.name, dispatch]);
 
   useEffect(() => {
     setActiveSort(CardSort.POPULAR);
   }, [city]);
 
-  const handleSortOpening = () => {
-    setSortOpeningState(!SortOpeningState);
-  };
+  const handleSortOpening = () => setSortOpeningState(!SortOpeningState);
 
   return (
     <div className="page page--gray page--main">
@@ -55,14 +54,14 @@ function MainPage(): JSX.Element {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <Tabs cities={cities} />
-        {cards.length === 0 && <MainPageEmpty city={city} />}
-        {cards.length !== 0 && (
+        {initialCards?.length === 0 && <MainPageEmpty />}
+        {initialCards?.length !== 0 && (
           <div className="cities">
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">
-                  {cards.length} places to stay in {city.name}
+                  {cards?.length} places to stay in {activeCityName}
                 </b>
                 <form
                   onClick={handleSortOpening}
@@ -138,7 +137,9 @@ function MainPage(): JSX.Element {
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map city={city} cards={cards} isOfferPage={false} />
+                  {city && cards && (
+                    <Map city={city} cards={cards} isOfferPage={false} />
+                  )}
                 </section>
               </div>
             </div>

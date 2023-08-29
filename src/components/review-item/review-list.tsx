@@ -20,7 +20,7 @@ function ReviewList({ offerId }: ReviewListProps) {
   );
   return (
     <ul className="reviews__list">
-      {initialComments.slice(0, Setting.ReviewCountMax).map((comment) => (
+      {initialComments?.slice(0, Setting.ReviewCountMax).map((comment) => (
         <ReviewItem
           key={comment.id}
           name={comment.user.name}

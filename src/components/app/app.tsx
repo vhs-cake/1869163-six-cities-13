@@ -15,11 +15,8 @@ import LoginRoute from '../private-route/login-route';
 import { useAuthorizationStatus } from '../../hooks/use-authorization-status';
 import ErrorScreen from '../../pages/error-screen/error-screen';
 import { useEffect } from 'react';
-import {
-  checkAuthAction,
-  fetchFavoritesAction,
-  fetchOffersAction,
-} from '../../store/api-actions';
+import { checkAuthAction, fetchOffersAction } from '../../store/api-actions';
+import { useFetchFavorites } from '../../hooks/use-fetch-favorites';
 
 function App(): JSX.Element {
   const { isUnknown } = useAuthorizationStatus();
@@ -28,7 +25,7 @@ function App(): JSX.Element {
     (state) => state[NameSpace.Data].isOffersDataLoading
   );
   const cardsNumber = useAppSelector(
-    (state) => state[NameSpace.Data].cards.length
+    (state) => state[NameSpace.Data].cards?.length
   );
   const dispatch = useAppDispatch();
 
@@ -38,9 +35,10 @@ function App(): JSX.Element {
     }
 
     dispatch(fetchOffersAction());
-    dispatch(fetchFavoritesAction());
     dispatch(checkAuthAction());
   }, [cardsNumber, dispatch]);
+
+  useFetchFavorites();
 
   if (isUnknown || isOffersDataLoading) {
     return <LoadingScreen />;

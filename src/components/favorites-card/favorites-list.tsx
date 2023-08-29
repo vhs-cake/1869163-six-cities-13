@@ -1,18 +1,13 @@
-import { useEffect, memo } from 'react';
-import { useAppDispatch } from '../../hooks';
-import { fetchFavoritesAction } from '../../store/api-actions';
+import { memo } from 'react';
 import FavoritesLocationsMemo from '../favorites-locations/favorites-locations';
+import { useFetchFavorites } from '../../hooks/use-fetch-favorites';
 
 type FavoritesListProps = {
   cities: string[];
 };
 
 function FavoritesList({ cities }: FavoritesListProps): JSX.Element {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(fetchFavoritesAction());
-  }, [dispatch]);
+  useFetchFavorites();
 
   return (
     <ul className="favorites__list">

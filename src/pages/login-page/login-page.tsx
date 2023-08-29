@@ -4,6 +4,7 @@ import { FormEvent, useRef, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { processErrorHandle } from '../../services/process-error-handle';
+import { HAS_LETTER_REGEXP, HAS_NUMBER_REGEXP } from '../../const';
 
 function LoginPage(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -17,8 +18,8 @@ function LoginPage(): JSX.Element {
 
     if (passwordRef.current) {
       const password = passwordRef.current.value;
-      const hasLetter = /[a-zA-Z]/.test(password);
-      const hasNumber = /[0-9]/.test(password);
+      const hasLetter = HAS_LETTER_REGEXP.test(password);
+      const hasNumber = HAS_NUMBER_REGEXP.test(password);
 
       if (loginRef.current !== null) {
         if (!hasLetter || !hasNumber) {

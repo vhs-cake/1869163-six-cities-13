@@ -7,7 +7,7 @@ function CardList(): JSX.Element {
 
   return (
     <div className="cities__places-list places__list tabs__content">
-      {cards.map((card) => (
+      {cards?.map((card) => (
         <Card key={card.id} card={card} />
       ))}
     </div>

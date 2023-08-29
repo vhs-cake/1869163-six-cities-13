@@ -1,7 +1,10 @@
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { NameSpace } from '../../const';
-import { filterByCity } from '../../store/cities-data/cities-data';
+import {
+  filterByCity,
+  setActiveCityName,
+} from '../../store/cities-data/cities-data';
 
 type TabItemProps = {
   cityName: string;
@@ -9,10 +12,13 @@ type TabItemProps = {
 
 function TabItem({ cityName }: TabItemProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const city = useAppSelector((state) => state[NameSpace.Data].city);
-  const isActive = city.name === cityName;
+  const activeCityName = useAppSelector(
+    (state) => state[NameSpace.Data].activeCityName
+  );
+  const isActive = activeCityName === cityName;
 
   function handleTabClick() {
+    dispatch(setActiveCityName(cityName));
     dispatch(filterByCity(cityName));
   }
 

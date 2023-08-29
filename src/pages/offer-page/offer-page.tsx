@@ -19,6 +19,7 @@ import ReviewFormMemo from '../../components/review-form/review-form';
 import ReviewList from '../../components/review-item/review-list';
 import StarRating from '../../components/star-rating/star-rating';
 import OfferGoods from '../../components/offer-goods/offer-goods';
+import NotFoundPage from '../not-found-page/not-found-page';
 
 function OfferPage(): JSX.Element {
   const initialComments = useAppSelector(
@@ -26,6 +27,9 @@ function OfferPage(): JSX.Element {
   );
   const chosenOffer = useAppSelector(
     (state) => state[NameSpace.Data].chosenOffer
+  );
+  const isChosenOfferLoading = useAppSelector(
+    (state) => state[NameSpace.Data].isChosenOfferLoading
   );
   const randomOffersNearby = useAppSelector(
     (state) => state[NameSpace.Data].randomOffersNearby
@@ -43,8 +47,12 @@ function OfferPage(): JSX.Element {
     dispatch(fetchOffersNearbyAction({ offerId: id }));
   }, [dispatch, id]);
 
-  if (!chosenOffer) {
+  if (isChosenOfferLoading) {
     return <LoadingScreen />;
+  }
+
+  if (!chosenOffer) {
+    return <NotFoundPage />;
   }
 
   return (
@@ -167,7 +175,7 @@ function OfferPage(): JSX.Element {
                 <h2 className="reviews__title">
                   Reviews ·{' '}
                   <span className="reviews__amount">
-                    {initialComments.length}
+                    {initialComments?.length}
                   </span>
                 </h2>
                 <ReviewList offerId={id} />
@@ -175,7 +183,7 @@ function OfferPage(): JSX.Element {
               </section>
             </div>
           </div>
-          {chosenOffer && (
+          {chosenOffer && randomOffersNearby && (
             <section className="offer__map map">
               <Map
                 city={chosenOffer.city}
@@ -190,7 +198,9 @@ function OfferPage(): JSX.Element {
             <h2 className="near-places__title">
               Other places in the neighbourhood
             </h2>
-            <OfferNearPlacesList offersNearby={randomOffersNearby} />
+            {randomOffersNearby && (
+              <OfferNearPlacesList offersNearby={randomOffersNearby} />
+            )}
           </section>
         </div>
       </main>

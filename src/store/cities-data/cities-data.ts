@@ -10,17 +10,15 @@ import {
   fetchOffersNearbyAction,
 } from '../api-actions';
 import { CardType } from '../../types/offer';
+import { getUpdatedCards, sortByDate } from '../../utils';
 
 const initialState: CitiesData = {
-  initialCards: [],
-  cards: [],
-  initialComments: [],
   favoriteCards: [],
   isOffersDataLoading: false,
+  isChosenOfferLoading: false,
   chosenOffer: null,
-  offersNearby: [],
-  randomOffersNearby: [],
   city: city,
+  activeCityName: city.name,
   hasError: false,
 };
 
@@ -37,23 +35,25 @@ export const citiesData = createSlice({
     setFavoriteCards(state, { payload }: PayloadAction<CardType[]>) {
       state.favoriteCards = payload;
     },
+    setActiveCityName(state, { payload }: PayloadAction<string>) {
+      state.activeCityName = payload;
+    },
     resetSort(state) {
       state.cards = initialState.initialCards;
     },
     sortPriceLowToHigh(state) {
-      state.cards = state.cards.sort((a, b) => a.price - b.price);
+      state.cards = state.cards?.sort((a, b) => a.price - b.price);
     },
     sortPriceHighToLow(state) {
-      state.cards = state.cards.sort((a, b) => b.price - a.price);
+      state.cards = state.cards?.sort((a, b) => b.price - a.price);
     },
     sortByRating(state) {
-      state.cards = state.cards.sort((a, b) => b.rating - a.rating);
+      state.cards = state.cards?.sort((a, b) => b.rating - a.rating);
     },
     filterByCity(state, { payload }: PayloadAction<string>) {
-      state.cards = state.initialCards.filter(
+      state.cards = state.initialCards?.filter(
         (card) => card.city.name === payload
       );
-      state.city = state.cards[0].city;
     },
   },
   extraReducers(builder) {
@@ -71,12 +71,17 @@ export const citiesData = createSlice({
         state.hasError = true;
       })
       .addCase(fetchCommentsAction.fulfilled, (state, action) => {
-        state.initialComments = action.payload.sort(
-          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-        );
+        state.initialComments = action.payload.sort(sortByDate);
       })
       .addCase(fetchChosenOfferAction.fulfilled, (state, action) => {
         state.chosenOffer = action.payload;
+        state.isChosenOfferLoading = false;
+      })
+      .addCase(fetchChosenOfferAction.pending, (state) => {
+        state.isChosenOfferLoading = true;
+      })
+      .addCase(fetchChosenOfferAction.rejected, (state) => {
+        state.isChosenOfferLoading = false;
       })
       .addCase(fetchOffersNearbyAction.fulfilled, (state, action) => {
         state.offersNearby = action.payload;
@@ -90,48 +95,43 @@ export const citiesData = createSlice({
       .addCase(changeFavoriteStatusAction.fulfilled, (state, action) => {
         const { id, isFavorite } = action.payload;
 
+        if (!state.initialCards || !state.cards) {
+          return;
+        }
+
         const updatedCard = {
           ...state.initialCards.filter((card) => card.id === id)[0],
           isFavorite: isFavorite,
         };
 
-        function getUpdatedCards(
-          cardsToUpdate: CardType[],
-          forceIgnorePushToUpdate?: boolean
-        ) {
-          if (
-            !cardsToUpdate.some((card) => card.id === id) &&
-            !forceIgnorePushToUpdate
-          ) {
-            cardsToUpdate.push(updatedCard);
-          }
+        state.cards = getUpdatedCards(id, updatedCard, state.cards);
 
-          const updatedCards = cardsToUpdate.map((card) => {
-            if (card.id === updatedCard.id) {
-              return updatedCard;
-            }
-            return card;
-          });
-
-          return updatedCards;
-        }
-
-        state.cards = getUpdatedCards(state.cards);
-
-        state.initialCards = getUpdatedCards(state.initialCards);
-
-        state.randomOffersNearby = getUpdatedCards(
-          state.randomOffersNearby,
-          true
+        state.initialCards = getUpdatedCards(
+          id,
+          updatedCard,
+          state.initialCards
         );
 
-        state.favoriteCards = getUpdatedCards(state.favoriteCards).filter(
-          (card) => card.isFavorite
-        );
+        state.favoriteCards = getUpdatedCards(
+          id,
+          updatedCard,
+          state.favoriteCards
+        ).filter((card) => card.isFavorite);
 
         if (state.chosenOffer?.id === id) {
           state.chosenOffer = { ...state.chosenOffer, isFavorite: isFavorite };
         }
+
+        if (!state.randomOffersNearby) {
+          return;
+        }
+
+        state.randomOffersNearby = getUpdatedCards(
+          id,
+          updatedCard,
+          state.randomOffersNearby,
+          true
+        );
       });
   },
 });
@@ -140,6 +140,7 @@ export const {
   setInitialCards,
   setCards,
   setFavoriteCards,
+  setActiveCityName,
   resetSort,
   sortPriceLowToHigh,
   sortPriceHighToLow,
