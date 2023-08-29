@@ -14,7 +14,7 @@ import {
 import { CardSort, NameSpace } from '../../const';
 import MainPageEmpty from './main-page-empty';
 import Header from '../../components/header/header';
-import Tabs from '../../components/tabs/tabs';
+import Tabs from '../../components/tab-item/tabs';
 
 function MainPage(): JSX.Element {
   const cards = useAppSelector((state) => state[NameSpace.Data].cards);

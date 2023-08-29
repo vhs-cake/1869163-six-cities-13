@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { useAppSelector } from '../../hooks';
-import FavoritesCard from './favorites-card';
-import FavoritesTabItem from '../../pages/favorites-page/favorites-tab-item';
+import FavoritesCard from '../favorites-card/favorites-card';
+import FavoritesTabItem from '../favorites-tab-item/favorites-tab-item';
 
 type FavoritesLocationsProps = {
   cityName: string;

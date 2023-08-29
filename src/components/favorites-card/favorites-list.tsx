@@ -1,7 +1,7 @@
 import { useEffect, memo } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { fetchFavoritesAction } from '../../store/api-actions';
-import FavoritesLocationsMemo from './favorites-locations';
+import FavoritesLocationsMemo from '../favorites-locations/favorites-locations';
 
 type FavoritesListProps = {
   cities: string[];

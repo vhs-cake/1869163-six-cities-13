@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import OfferGalleryItem from './offer-gallery-item';
+import OfferGalleryItem from '../offer-gallery-item/offer-gallery-item';
 
 type OfferGalleryProps = {
   images: string[];

@@ -14,9 +14,9 @@ import { NameSpace } from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
 import Header from '../../components/header/header';
 import OfferGallery from '../../components/offer-gallery/offer-gallery';
-import OfferNearPlacesList from '../../components/offer-near-places/offer-near-places-list';
-import ReviewFormMemo from '../../components/review/review-form';
-import ReviewList from '../../components/review/review-list';
+import OfferNearPlacesList from '../../components/offer-near-places-item/offer-near-places-list';
+import ReviewFormMemo from '../../components/review-item/review-form';
+import ReviewList from '../../components/review-item/review-list';
 import StarRating from '../../components/star-rating/star-rating';
 import OfferGoods from '../../components/offer-goods/offer-goods';
 
