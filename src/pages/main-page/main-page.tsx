@@ -84,17 +84,18 @@ function MainPage(): JSX.Element {
                     )}
                   >
                     <li
-                      className="places__option places__option--active"
-                      tabIndex={0}
-                      onClick={() => {
-                        dispatch(filterByCity(city.name));
-                        setActiveSort(CardSort.POPULAR);
-                      }}
+                      className={classNames('places__option', {
+                        'places__option--active':
+                          activeSort === CardSort.POPULAR,
+                      })}
                     >
                       Popular
                     </li>
                     <li
-                      className="places__option"
+                      className={classNames('places__option', {
+                        'places__option--active':
+                          activeSort === CardSort.LOW_TO_HIGH,
+                      })}
                       tabIndex={0}
                       onClick={() => {
                         dispatch(sortPriceLowToHigh());
@@ -104,7 +105,10 @@ function MainPage(): JSX.Element {
                       Price: low to high
                     </li>
                     <li
-                      className="places__option"
+                      className={classNames('places__option', {
+                        'places__option--active':
+                          activeSort === CardSort.HIGH_TO_LOW,
+                      })}
                       tabIndex={0}
                       onClick={() => {
                         dispatch(sortPriceHighToLow());
@@ -114,7 +118,10 @@ function MainPage(): JSX.Element {
                       Price: high to low
                     </li>
                     <li
-                      className="places__option"
+                      className={classNames('places__option', {
+                        'places__option--active':
+                          activeSort === CardSort.TOP_RATED_FIRST,
+                      })}
                       tabIndex={0}
                       onClick={() => {
                         dispatch(sortByRating());
