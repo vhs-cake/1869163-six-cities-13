@@ -10,12 +10,12 @@ import {
 } from '../../store/api-actions';
 import { useEffect } from 'react';
 import classNames from 'classnames';
-import { NameSpace } from '../../const';
+import { ApartmentType, NameSpace } from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
 import Header from '../../components/header/header';
 import OfferGallery from '../../components/offer-gallery/offer-gallery';
 import OfferNearPlacesList from '../../components/offer-near-places-item/offer-near-places-list';
-import ReviewFormMemo from '../../components/review-item/review-form';
+import ReviewFormMemo from '../../components/review-form/review-form';
 import ReviewList from '../../components/review-item/review-list';
 import StarRating from '../../components/star-rating/star-rating';
 import OfferGoods from '../../components/offer-goods/offer-goods';
@@ -30,6 +30,9 @@ function OfferPage(): JSX.Element {
   const randomOffersNearby = useAppSelector(
     (state) => state[NameSpace.Data].randomOffersNearby
   );
+
+  const apartmentType =
+    ApartmentType[chosenOffer?.type as keyof typeof ApartmentType];
 
   const dispatch = useAppDispatch();
   const { isAuth, isNoAuth } = useAuthorizationStatus();
@@ -113,7 +116,7 @@ function OfferPage(): JSX.Element {
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  {chosenOffer.type}
+                  {apartmentType}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
                   {chosenOffer.bedrooms} Bedrooms

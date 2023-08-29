@@ -3,12 +3,15 @@ import { CardType } from '../../types/offer';
 import { setActiveCard } from '../../store/cities-process/cities-process';
 import { changeFavoriteStatusAction } from '../../store/api-actions';
 import { useAppDispatch } from '../../hooks';
+import { ApartmentType } from '../../const';
 
 type FavoritesCardProps = {
   card: CardType;
 };
 
 function FavoritesCard({ card }: FavoritesCardProps): JSX.Element {
+  const apartmentType = ApartmentType[card.type as keyof typeof ApartmentType];
+
   const dispatch = useAppDispatch();
 
   const handleMouseOver = () => {
@@ -64,7 +67,7 @@ function FavoritesCard({ card }: FavoritesCardProps): JSX.Element {
         <h2 className="place-card__name">
           <Link to={`/offer/:${card.id}`}>{card.title}</Link>
         </h2>
-        <p className="place-card__type">{card.type}</p>
+        <p className="place-card__type">{apartmentType}</p>
       </div>
     </article>
   );

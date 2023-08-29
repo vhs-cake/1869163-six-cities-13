@@ -7,6 +7,7 @@ import { setActiveCard } from '../../store/cities-process/cities-process';
 import { CardType } from '../../types/offer';
 import StarRating from '../star-rating/star-rating';
 import { changeFavoriteStatusAction } from '../../store/api-actions';
+import { ApartmentType } from '../../const';
 
 type OfferNearPlacesItemProps = {
   card: CardType;
@@ -23,6 +24,8 @@ function OfferNearPlacesItem({ card }: OfferNearPlacesItemProps): JSX.Element {
     type,
     id,
   } = card;
+
+  const apartmentType = ApartmentType[type as keyof typeof ApartmentType];
 
   const { isAuth, isNoAuth } = useAuthorizationStatus();
   const dispatch = useAppDispatch();
@@ -95,7 +98,7 @@ function OfferNearPlacesItem({ card }: OfferNearPlacesItemProps): JSX.Element {
         <h2 className="place-card__name">
           <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{apartmentType}</p>
       </div>
     </article>
   );

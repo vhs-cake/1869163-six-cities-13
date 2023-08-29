@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import { setActiveCard } from '../../store/cities-process/cities-process';
 import StarRating from '../star-rating/star-rating';
 import { changeFavoriteStatusAction } from '../../store/api-actions';
+import { ApartmentType } from '../../const';
 
 type CardProps = {
   card: CardType;
@@ -25,8 +26,9 @@ function Card({ card }: CardProps): JSX.Element {
     id,
   } = card;
 
-  const dispatch = useAppDispatch();
+  const apartmentType = ApartmentType[type as keyof typeof ApartmentType];
 
+  const dispatch = useAppDispatch();
   function handleMouseOver() {
     dispatch(setActiveCard(card));
   }
@@ -88,7 +90,7 @@ function Card({ card }: CardProps): JSX.Element {
         <h2 className="place-card__name">
           <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{apartmentType}</p>
       </div>
     </article>
   );

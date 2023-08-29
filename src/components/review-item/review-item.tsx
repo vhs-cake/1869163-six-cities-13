@@ -1,5 +1,5 @@
 import StarRating from '../star-rating/star-rating';
-import { getFormattedDate } from './utils';
+import { getFormattedDate } from '../../utils';
 
 type ReviewItemProps = {
   name: string;

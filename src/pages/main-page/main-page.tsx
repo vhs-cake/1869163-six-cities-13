@@ -35,16 +35,16 @@ function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(filterByCity('Paris'));
-  }, [dispatch]);
+    dispatch(filterByCity(city.name));
+  }, [city.name, dispatch]);
 
   useEffect(() => {
     setActiveSort(CardSort.POPULAR);
   }, [city]);
 
-  function handleSortOpening() {
+  const handleSortOpening = () => {
     setSortOpeningState(!SortOpeningState);
-  }
+  };
 
   return (
     <div className="page page--gray page--main">
