@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { NameSpace, city } from '../../const';
+import { NameSpace, Setting, city } from '../../const';
 import { CitiesData } from '../../types/state';
 import {
   changeFavoriteStatusAction,
@@ -19,6 +19,7 @@ const initialState: CitiesData = {
   isOffersDataLoading: false,
   chosenOffer: null,
   offersNearby: [],
+  randomOffersNearby: [],
   city: city,
   hasError: false,
 };
@@ -79,6 +80,9 @@ export const citiesData = createSlice({
       })
       .addCase(fetchOffersNearbyAction.fulfilled, (state, action) => {
         state.offersNearby = action.payload;
+        state.randomOffersNearby = state.offersNearby
+          .sort(() => Math.random() - 0.5)
+          .slice(0, Setting.OfferMapPointsCount);
       })
       .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
         state.favoriteCards = action.payload;
@@ -116,7 +120,10 @@ export const citiesData = createSlice({
 
         state.initialCards = getUpdatedCards(state.initialCards);
 
-        state.offersNearby = getUpdatedCards(state.offersNearby, true);
+        state.randomOffersNearby = getUpdatedCards(
+          state.randomOffersNearby,
+          true
+        );
 
         state.favoriteCards = getUpdatedCards(state.favoriteCards).filter(
           (card) => card.isFavorite

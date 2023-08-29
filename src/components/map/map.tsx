@@ -10,6 +10,7 @@ import { useAppSelector } from '../../hooks';
 type MapProps = {
   cards: CardType[];
   city: CityType;
+  isOfferPage: boolean;
 };
 
 const defaultCustomIcon = leaflet.icon({
@@ -24,12 +25,16 @@ const currentCustomIcon = leaflet.icon({
   iconAnchor: [20, 40],
 });
 
-function Map({ cards, city }: MapProps): JSX.Element {
+function Map({ cards, city, isOfferPage }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap({ mapRef, city });
 
-  const activeCard = useAppSelector((state) => state[NameSpace.Cities].activeCard);
-  const chosenOffer = useAppSelector((state) => state[NameSpace.Data].chosenOffer);
+  const activeCard = useAppSelector(
+    (state) => state[NameSpace.Cities].activeCard
+  );
+  const chosenOffer = useAppSelector(
+    (state) => state[NameSpace.Data].chosenOffer
+  );
 
   useEffect(() => {
     if (map) {
@@ -56,7 +61,7 @@ function Map({ cards, city }: MapProps): JSX.Element {
 
         marker
           .setIcon(
-            activeCard && activeCard?.id === card.id
+            !isOfferPage && activeCard?.id === card.id
               ? currentCustomIcon
               : defaultCustomIcon
           )
@@ -67,7 +72,7 @@ function Map({ cards, city }: MapProps): JSX.Element {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, cards, activeCard, city, chosenOffer]);
+  }, [map, cards, activeCard, city, chosenOffer, isOfferPage]);
 
   return <div style={{ height: '100%', width: '100%' }} ref={mapRef} />;
 }

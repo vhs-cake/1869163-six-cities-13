@@ -26,6 +26,7 @@ export type CitiesData = {
   isOffersDataLoading: boolean;
   chosenOffer: ChosenOfferType | null;
   offersNearby: CardType[];
+  randomOffersNearby: CardType[];
   city: CityType;
   hasError: boolean;
 };

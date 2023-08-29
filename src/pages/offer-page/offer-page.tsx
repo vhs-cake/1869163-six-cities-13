@@ -10,7 +10,7 @@ import {
 } from '../../store/api-actions';
 import { useEffect } from 'react';
 import classNames from 'classnames';
-import { NameSpace, Setting } from '../../const';
+import { NameSpace } from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
 import Header from '../../components/header/header';
 import OfferGallery from '../../components/offer-gallery/offer-gallery';
@@ -27,8 +27,8 @@ function OfferPage(): JSX.Element {
   const chosenOffer = useAppSelector(
     (state) => state[NameSpace.Data].chosenOffer
   );
-  const offersNearby = useAppSelector(
-    (state) => state[NameSpace.Data].offersNearby
+  const randomOffersNearby = useAppSelector(
+    (state) => state[NameSpace.Data].randomOffersNearby
   );
 
   const dispatch = useAppDispatch();
@@ -39,10 +39,6 @@ function OfferPage(): JSX.Element {
     dispatch(fetchChosenOfferAction({ offerId: id }));
     dispatch(fetchOffersNearbyAction({ offerId: id }));
   }, [dispatch, id]);
-
-  const randomMapPoints = [...offersNearby]
-    .sort(() => Math.random() - 0.5)
-    .slice(0, Setting.OfferMapPointsCount);
 
   if (!chosenOffer) {
     return <LoadingScreen />;
@@ -178,7 +174,11 @@ function OfferPage(): JSX.Element {
           </div>
           {chosenOffer && (
             <section className="offer__map map">
-              <Map city={chosenOffer.city} cards={randomMapPoints} />
+              <Map
+                city={chosenOffer.city}
+                cards={randomOffersNearby}
+                isOfferPage
+              />
             </section>
           )}
         </section>
@@ -187,7 +187,7 @@ function OfferPage(): JSX.Element {
             <h2 className="near-places__title">
               Other places in the neighbourhood
             </h2>
-            <OfferNearPlacesList offersNearby={offersNearby} />
+            <OfferNearPlacesList offersNearby={randomOffersNearby} />
           </section>
         </div>
       </main>

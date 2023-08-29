@@ -131,7 +131,7 @@ function MainPage(): JSX.Element {
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map city={city} cards={cards} />
+                  <Map city={city} cards={cards} isOfferPage={false} />
                 </section>
               </div>
             </div>
