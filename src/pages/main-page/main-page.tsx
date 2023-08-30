@@ -50,7 +50,11 @@ function MainPage(): JSX.Element {
         <title>6 cities. Main page</title>
       </Helmet>
       <Header />
-      <main className="page__main page__main--index">
+      <main
+        className={classNames('page__main page__main--index', {
+          'page__main--index-empty': initialCards?.length === 0,
+        })}
+      >
         <h1 className="visually-hidden">Cities</h1>
         <Tabs cities={cities} />
         {initialCards?.length === 0 && <MainPageEmpty />}

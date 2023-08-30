@@ -54,6 +54,11 @@ export const citiesData = createSlice({
       state.cards = state.initialCards?.filter(
         (card) => card.city.name === payload
       );
+
+      if (!state.cards?.length) {
+        return;
+      }
+      state.city = state.cards[0].city;
     },
   },
   extraReducers(builder) {
