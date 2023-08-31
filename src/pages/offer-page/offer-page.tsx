@@ -126,12 +126,26 @@ function OfferPage(): JSX.Element {
                 <li className="offer__feature offer__feature--entire">
                   {apartmentType}
                 </li>
-                <li className="offer__feature offer__feature--bedrooms">
-                  {chosenOffer.bedrooms} Bedrooms
-                </li>
-                <li className="offer__feature offer__feature--adults">
-                  Max {chosenOffer.maxAdults} adults
-                </li>
+                {chosenOffer.bedrooms !== 1 && (
+                  <li className="offer__feature offer__feature--bedrooms">
+                    {chosenOffer.bedrooms} Bedrooms
+                  </li>
+                )}
+                {chosenOffer.bedrooms === 1 && (
+                  <li className="offer__feature offer__feature--bedrooms">
+                    1 Bedroom
+                  </li>
+                )}
+                {chosenOffer.maxAdults !== 1 && (
+                  <li className="offer__feature offer__feature--adults">
+                    Max {chosenOffer.maxAdults} adults
+                  </li>
+                )}
+                {chosenOffer.maxAdults === 1 && (
+                  <li className="offer__feature offer__feature--adults">
+                    Max 1 adult
+                  </li>
+                )}
               </ul>
               <div className="offer__price">
                 <b className="offer__price-value">€{chosenOffer.price}</b>

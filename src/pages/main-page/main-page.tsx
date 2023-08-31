@@ -63,9 +63,16 @@ function MainPage(): JSX.Element {
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">
-                  {cards?.length} places to stay in {activeCityName}
-                </b>
+                {cards?.length !== 1 && (
+                  <b className="places__found">
+                    {cards?.length} places to stay in {activeCityName}
+                  </b>
+                )}
+                {cards?.length === 1 && (
+                  <b className="places__found">
+                    1 place to stay in {activeCityName}
+                  </b>
+                )}
                 <form
                   onClick={handleSortOpening}
                   className="places__sorting"
