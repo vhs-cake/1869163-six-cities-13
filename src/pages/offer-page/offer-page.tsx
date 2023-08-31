@@ -20,6 +20,10 @@ import ReviewList from '../../components/review-item/review-list';
 import StarRating from '../../components/star-rating/star-rating';
 import OfferGoods from '../../components/offer-goods/offer-goods';
 import NotFoundPage from '../not-found-page/not-found-page';
+import {
+  setCurrentComment,
+  setCurrentRating,
+} from '../../store/cities-process/cities-process';
 
 function OfferPage(): JSX.Element {
   const initialComments = useAppSelector(
@@ -44,6 +48,8 @@ function OfferPage(): JSX.Element {
 
   useEffect(() => {
     dispatch(fetchChosenOfferAction({ offerId: id }));
+    dispatch(setCurrentComment(''));
+    dispatch(setCurrentRating(0));
     dispatch(fetchOffersNearbyAction({ offerId: id }));
   }, [dispatch, id]);
 
