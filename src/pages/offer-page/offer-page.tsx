@@ -24,6 +24,7 @@ import {
   setCurrentComment,
   setCurrentRating,
 } from '../../store/cities-process/cities-process';
+import { isFavoritesLoadingSelector } from '../../store/selectors';
 
 function OfferPage(): JSX.Element {
   const initialComments = useAppSelector(
@@ -38,6 +39,7 @@ function OfferPage(): JSX.Element {
   const randomOffersNearby = useAppSelector(
     (state) => state[NameSpace.Data].randomOffersNearby
   );
+  const isFavoritesLoading = useAppSelector(isFavoritesLoadingSelector);
 
   const apartmentType =
     ApartmentType[chosenOffer?.type as keyof typeof ApartmentType];
@@ -92,6 +94,7 @@ function OfferPage(): JSX.Element {
                       'offer__bookmark-button--active': chosenOffer.isFavorite,
                     })}
                     type="button"
+                    disabled={isFavoritesLoading}
                   >
                     <svg
                       className="offer__bookmark-icon"

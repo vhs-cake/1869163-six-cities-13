@@ -16,6 +16,7 @@ const initialState: CitiesData = {
   favoriteCards: [],
   isOffersDataLoading: false,
   isChosenOfferLoading: false,
+  isFavoritesLoading: false,
   chosenOffer: null,
   city: city,
   activeCityName: city.name,
@@ -97,7 +98,12 @@ export const citiesData = createSlice({
       .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
         state.favoriteCards = action.payload;
       })
+      .addCase(changeFavoriteStatusAction.pending, (state) => {
+        state.isFavoritesLoading = true;
+      })
       .addCase(changeFavoriteStatusAction.fulfilled, (state, action) => {
+        state.isFavoritesLoading = false;
+
         const { id, isFavorite } = action.payload;
 
         if (!state.initialCards || !state.cards) {

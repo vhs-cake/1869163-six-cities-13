@@ -2,12 +2,13 @@ import { memo } from 'react';
 import classNames from 'classnames';
 import { useAuthorizationStatus } from '../../hooks/use-authorization-status';
 import { Link } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setActiveCard } from '../../store/cities-process/cities-process';
 import { CardType } from '../../types/offer';
 import StarRating from '../star-rating/star-rating';
 import { changeFavoriteStatusAction } from '../../store/api-actions';
 import { ApartmentType } from '../../const';
+import { isFavoritesLoadingSelector } from '../../store/selectors';
 
 type OfferNearPlacesItemProps = {
   card: CardType;
@@ -26,6 +27,7 @@ function OfferNearPlacesItem({ card }: OfferNearPlacesItemProps): JSX.Element {
   } = card;
 
   const apartmentType = ApartmentType[type as keyof typeof ApartmentType];
+  const isFavoritesLoading = useAppSelector(isFavoritesLoadingSelector);
 
   const { isAuth, isNoAuth } = useAuthorizationStatus();
   const dispatch = useAppDispatch();
@@ -70,6 +72,7 @@ function OfferNearPlacesItem({ card }: OfferNearPlacesItemProps): JSX.Element {
                 'place-card__bookmark-button--active': isFavorite,
               })}
               type="button"
+              disabled={isFavoritesLoading}
             >
               <svg className="place-card__bookmark-icon" width={18} height={19}>
                 <use xlinkHref="#icon-bookmark" />

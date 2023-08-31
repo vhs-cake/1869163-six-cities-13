@@ -2,12 +2,13 @@ import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { CardType } from '../../types/offer';
 import { useAuthorizationStatus } from '../../hooks/use-authorization-status';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import classNames from 'classnames';
 import { setActiveCard } from '../../store/cities-process/cities-process';
 import StarRating from '../star-rating/star-rating';
 import { changeFavoriteStatusAction } from '../../store/api-actions';
 import { ApartmentType } from '../../const';
+import { isFavoritesLoadingSelector } from '../../store/selectors';
 
 type CardProps = {
   card: CardType;
@@ -27,6 +28,7 @@ function Card({ card }: CardProps): JSX.Element {
   } = card;
 
   const apartmentType = ApartmentType[type as keyof typeof ApartmentType];
+  const isFavoritesLoading = useAppSelector(isFavoritesLoadingSelector);
 
   const dispatch = useAppDispatch();
   function handleMouseOver() {
@@ -66,6 +68,7 @@ function Card({ card }: CardProps): JSX.Element {
                 'place-card__bookmark-button--active': isFavorite,
               })}
               type="button"
+              disabled={isFavoritesLoading}
             >
               <svg className="place-card__bookmark-icon" width={18} height={19}>
                 <use xlinkHref="#icon-bookmark" />

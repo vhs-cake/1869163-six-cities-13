@@ -2,8 +2,9 @@ import { Link } from 'react-router-dom';
 import { CardType } from '../../types/offer';
 import { setActiveCard } from '../../store/cities-process/cities-process';
 import { changeFavoriteStatusAction } from '../../store/api-actions';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { ApartmentType } from '../../const';
+import { isFavoritesLoadingSelector } from '../../store/selectors';
 
 type FavoritesCardProps = {
   card: CardType;
@@ -11,6 +12,7 @@ type FavoritesCardProps = {
 
 function FavoritesCard({ card }: FavoritesCardProps): JSX.Element {
   const apartmentType = ApartmentType[card.type as keyof typeof ApartmentType];
+  const isFavoritesLoading = useAppSelector(isFavoritesLoadingSelector);
 
   const dispatch = useAppDispatch();
 
@@ -51,6 +53,7 @@ function FavoritesCard({ card }: FavoritesCardProps): JSX.Element {
             }}
             className="place-card__bookmark-button place-card__bookmark-button--active button"
             type="button"
+            disabled={isFavoritesLoading}
           >
             <svg className="place-card__bookmark-icon" width={18} height={19}>
               <use xlinkHref="#icon-bookmark" />
