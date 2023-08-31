@@ -1,7 +1,7 @@
 import { CommentType } from './types/comment';
 import { CardType } from './types/offer';
 
-const monthNames = [
+const MONTH_NAMES = [
   'January',
   'February',
   'March',
@@ -20,7 +20,7 @@ export const getFormattedDate = (date: string) => {
   const parsedDate = new Date(date);
 
   const year = parsedDate.getUTCFullYear();
-  const month = monthNames[parsedDate.getMonth()];
+  const month = MONTH_NAMES[parsedDate.getMonth()];
 
   return `${month} ${year}`;
 };

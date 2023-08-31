@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/use-map';
 import { CardType } from '../../types/offer';
 import { CityType } from '../../types/city';
-import { NameSpace, URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
+import { NameSpace, UrlMarker } from '../../const';
 import { useAppSelector } from '../../hooks';
 
 type MapProps = {
@@ -14,13 +14,13 @@ type MapProps = {
 };
 
 const defaultCustomIcon = leaflet.icon({
-  iconUrl: URL_MARKER_DEFAULT,
+  iconUrl: UrlMarker.Default,
   iconSize: [30, 40],
   iconAnchor: [20, 40],
 });
 
 const currentCustomIcon = leaflet.icon({
-  iconUrl: URL_MARKER_CURRENT,
+  iconUrl: UrlMarker.Current,
   iconSize: [30, 40],
   iconAnchor: [20, 40],
 });

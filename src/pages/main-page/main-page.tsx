@@ -10,7 +10,7 @@ import {
   sortPriceHighToLow,
   sortPriceLowToHigh,
 } from '../../store/cities-data/cities-data';
-import { CardSort, NameSpace, cities } from '../../const';
+import { CITIES, CardSort, NameSpace } from '../../const';
 import MainPageEmpty from './main-page-empty';
 import Header from '../../components/header/header';
 import Tabs from '../../components/tab-item/tabs';
@@ -56,7 +56,7 @@ function MainPage(): JSX.Element {
         })}
       >
         <h1 className="visually-hidden">Cities</h1>
-        <Tabs cities={cities} />
+        <Tabs cities={CITIES} />
         {initialCards?.length === 0 && <MainPageEmpty />}
         {initialCards?.length !== 0 && (
           <div className="cities">

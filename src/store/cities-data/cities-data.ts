@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { NameSpace, Setting, city } from '../../const';
+import { NameSpace, Setting, CITY } from '../../const';
 import { CitiesData } from '../../types/state';
 import {
   changeFavoriteStatusAction,
@@ -18,8 +18,8 @@ const initialState: CitiesData = {
   isChosenOfferLoading: false,
   isFavoritesLoading: false,
   chosenOffer: null,
-  city: city,
-  activeCityName: city.name,
+  city: CITY,
+  activeCityName: CITY.name,
   hasError: false,
 };
 

@@ -5,11 +5,11 @@ export const Setting = {
   ReviewCharactersMin: 50,
   ReviewCharactersMax: 300,
   OfferMapPointsCount: 3,
-};
+} as const;
 
 export const TIMEOUT_SHOW_ERROR = 2000;
 
-export const city: CityType = {
+export const CITY: CityType = {
   name: 'Paris',
   location: { latitude: 48.85661, longitude: 2.351499, zoom: 13 },
 };
@@ -17,7 +17,7 @@ export const city: CityType = {
 export const HAS_LETTER_REGEXP = /[a-zA-Z]/;
 export const HAS_NUMBER_REGEXP = /[0-9]/;
 
-export const cities = [
+export const CITIES = [
   'Paris',
   'Cologne',
   'Brussels',
@@ -67,6 +67,7 @@ export enum ApartmentType {
   hotel = 'Hotel',
 }
 
-export const URL_MARKER_DEFAULT = '/img/pin.svg';
-
-export const URL_MARKER_CURRENT = '/img/pin-active.svg';
+export const UrlMarker = {
+  Default: '/img/pin.svg',
+  Current: '/img/pin-active.svg',
+} as const;
