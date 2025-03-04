@@ -107,16 +107,10 @@ The application consists of the following pages:
 ## 2. API Interaction
 
 - The application interacts with a backend server.
-- **Server Base URL**: [https://13.design.pages.academy/six-cities](https://13.design.pages.academy/six-cities)
-- **API Specification**: [OpenAPI Docs](https://13.design.pages.academy/spec/six-cities)
+- **Server Base URL**: [https://13.design.htmlacademy.pro/six-cities](https://13.design.htmlacademy.pro/six-cities)
 - If the server is unavailable, an **error message** is shown.
 - **All requests are sent in JSON format**.
 - **Authorization**:
   - The server requires a **token-based authentication**.
   - The token is included in the **X-Token header** with each request.
-
-## 3. Additional Notes
-- UI elements are styled based on application state (e.g., active filter highlights).
-- Predefined styles are available in the **markup** directory.
-
 
