@@ -21,3 +21,4 @@ export type CardType = {
   rating: number;
   previewImage: string;
 };
+ 
