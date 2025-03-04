@@ -115,6 +115,8 @@ The application consists of the following pages:
   - The token is included in the **X-Token header** with each request.
 ## Getting Started
 
+### Clone the repository
+
 ### Installation
 ```npm install```
 
