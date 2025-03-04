@@ -1,49 +1,127 @@
-# Личный проект «Шесть городов»
+# Six Cities
 
-- Студент: [Valerie Kravtsova](https://up.htmlacademy.ru/react/13/user/1869163).
-- Наставник: [Елена Грицук](https://htmlacademy.ru/profile/id199079).
+Six Cities is a travel service designed for budget-conscious travelers looking for affordable rental accommodations. Choose from six popular cities and get an up-to-date list of rental offers. Detailed information about each property, interactive maps, and a user-friendly interface help you quickly find the best option.
 
----
+## 1. Features
 
-_Не удаляйте и не изменяйте папки и файлы:_
-_`.editorconfig`, `.gitattributes`, `.gitignore`._
+### 1.1 Application Pages
 
----
+The application consists of the following pages:
+- **Main Page (/)**
+- **Login Page (/login)**
+- **Favorites Page (/favorites) (Private)**
+- **Offer Page (/offer/:id)**
 
-### Памятка
+#### Page Access Rules:
+- The **Favorites Page** is only available to authorized users.
+- If a user is authorized and tries to access the **Login Page**, they will be redirected to the **Main Page**.
+- If an unauthorized user attempts to access a private page, they will be redirected to the **Login Page**.
+- The header displays a link to the **Login Page** (if the user is not authorized) or the user's email and a **Log Out** button (if authorized).
+- Clicking the **Log Out** button logs out the user and exits the private section of the application.
+- Clicking the user’s email redirects to the **Favorites Page**.
+- Non-existent pages redirect the user to a **404 Page**, which contains a message and a link back to the main page.
 
-#### 1. Зарегистрируйтесь на Гитхабе
+### 1.1.1 Main Page
 
-Если у вас ещё нет аккаунта на [github.com](https://github.com/join), скорее зарегистрируйтесь.
+- The main page displays a list of six cities with rental offers:
+  - Paris, Cologne, Brussels, Amsterdam, Hamburg, Dusseldorf.
+- By default, **Paris** is selected, and rental offers for this city are displayed.
+- Offers are shown on a map with **blue markers**.
+- Changing the selected city updates the list of offers and the map.
+- The header displays the number of available rental offers, e.g., **"312 places to stay in Amsterdam"**.
+- Each offer card includes:
+  - Image of the rental property.
+  - **Premium label** (if applicable).
+  - **Price per night (in EUR)**.
+  - **Title** (e.g., "Beautiful & luxurious apartment at great location").
+  - **Property type** (apartment, room, house, hotel).
+  - **Favorite button**:
+    - Clicking it adds/removes the property from favorites.
+    - If the user is not authorized, they will be redirected to **Login Page**.
+  - **Rating (1-5 stars)**:
+    - Rounded to the nearest whole number.
+    - Example: **3.1 → 3 stars, 4.5 → 5 stars**.
+  - Clicking the **title** opens the **Offer Page** with detailed information.
+- Sorting options for offers:
+  - **Popular (default order from the server)**
+  - **Price: low to high**
+  - **Price: high to low**
+  - **Top rated first**
+  - Sorting menu opens on click and closes when an option is selected.
 
-#### 2. Создайте форк
+### 1.1.1.2 Map
+- All rental offers for the selected city are shown on a map with **blue markers**.
+- Hovering over an offer card highlights its marker **in orange**.
+- On the **Offer Page**, markers do not change color.
 
-Откройте репозиторий и нажмите кнопку «Fork» в правом верхнем углу. Репозиторий из Академии будет скопирован в ваш аккаунт.
+### 1.1.2 Offer Page (/offer/:id)
+- Displays detailed rental information:
+  - Up to **6 photos**.
+  - **Title and description**.
+  - **Premium label (if applicable)**.
+  - **Property type** (apartment, room, house, hotel).
+  - **Rating (1-5 stars, rounded)** and **average score (not rounded)**.
+  - **Number of bedrooms** (e.g., "3 Bedrooms").
+  - **Maximum guests** (e.g., "Max 4 adults").
+  - **Price per night (in EUR)**.
+  - **Amenities** (e.g., WiFi, Heating, Kitchen, Cable TV, etc.).
+  - **Host information** (avatar, name, "Pro" badge if applicable).
+  - **Favorite button** (adds/removes from favorites, redirects to **Login Page** if unauthorized).
+  - **User Reviews Section**:
+    - Displays up to **10 reviews**, sorted **newest to oldest**.
+    - Shows **total review count**.
+    - Reviews include:
+      - **Author avatar and name**
+      - **Rating (1-5 stars)**
+      - **Date (formatted as Month Year, e.g., "April 2019")**
+      - **Review text**
+  - **Nearby Offers**:
+    - **3 random nearby rental offers** displayed on a map along with the current offer.
+    - Current offer marker is **orange**, others are **blue**.
+    - Below the map, offer cards are shown with the same details as on the main page.
 
-<img width="769" alt="Press 'Fork'" src="https://cloud.githubusercontent.com/assets/259739/20264045/a1ddbf40-aa7a-11e6-9a1a-724a1c0123c8.png">
+### 1.1.2.2 Review Submission Form
+- Available **only for authorized users**.
+- Users must select a **rating (1-5 stars)** and write a **review (50-300 characters)**.
+- The **Submit button is disabled** until a valid rating and review are entered.
+- Upon submission:
+  - The form and button become **disabled**.
+  - On **success**, the form is **cleared**.
+  - On **error**, the user is notified.
+- Users can submit **multiple reviews**.
 
-Получится вот так:
+### 1.1.3 Login Page (/login)
+- Users enter **email** and **password**.
+- No registration is required—any non-empty credentials work.
+- **Email must be valid**.
+- **Password must contain at least one letter and one number**.
+- Only accessible to **unauthorized users** (authorized users are redirected to **Main Page**).
 
-<img width="769" alt="Forked" src="https://cloud.githubusercontent.com/assets/259739/20264122/f63219a6-aa7a-11e6-945a-89818fc7c014.png">
+### 1.1.4 Favorites Page (/favorites)
+- Only accessible to **authorized users**.
+- Displays all **favorite rental offers**, grouped **by city**.
+- Clicking the **Favorite button** removes an offer from the list.
+- If no offers are favorited, the page displays **"Nothing yet saved"**.
+- The header displays the **number of favorite offers**, updating dynamically.
 
-#### 3. Клонируйте репозиторий на свой компьютер
+## 2. API Interaction
 
-Будьте внимательны: нужно клонировать свой репозиторий (форк), а не репозиторий Академии. Также обратите внимание, что клонировать репозиторий нужно через SSH, а не через HTTPS. Нажмите зелёную кнопку в правой части экрана, чтобы скопировать SSH-адрес вашего репозитория:
+- The application interacts with a backend server.
+- **Server Base URL**: [https://13.design.htmlacademy.pro/six-cities](https://13.design.htmlacademy.pro/six-cities)
+- If the server is unavailable, an **error message** is shown.
+- **All requests are sent in JSON format**.
+- **Authorization**:
+  - The server requires a **token-based authentication**.
+  - The token is included in the **X-Token header** with each request.
+## Getting Started
 
-<img width="769" alt="SSH" src="https://cloud.githubusercontent.com/assets/259739/20264180/42704126-aa7b-11e6-9ab4-73372b812a53.png">
+### Clone the repository
 
-Клонировать репозиторий можно так:
+### Installation
+```npm install```
 
-```
-git clone SSH-адрес_вашего_форка
-```
+### Running the Application
+```npm start```
 
-Команда клонирует репозиторий на ваш компьютер и подготовит всё необходимое для старта работы.
 
-#### 4. Начинайте обучение!
 
----
-
-<a href="https://htmlacademy.ru/intensive/react"><img align="left" width="50" height="50" title="HTML Academy" src="https://up.htmlacademy.ru/static/img/intensive/react/logo-for-github.png"></a>
-
-Репозиторий создан для обучения на профессиональном онлайн‑курсе «[React. Разработка сложных клиентских приложений](https://htmlacademy.ru/intensive/react)» от [HTML Academy](https://htmlacademy.ru).
