@@ -113,4 +113,13 @@ The application consists of the following pages:
 - **Authorization**:
   - The server requires a **token-based authentication**.
   - The token is included in the **X-Token header** with each request.
+## Getting Started
+
+### Installation
+```npm install```
+
+### Running the Application
+```npm start```
+
+
 
